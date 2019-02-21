@@ -1,8 +1,8 @@
 <!--<!DOCTYPE html>-->
 <!--<html lang="en">-->
 <!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>eBay globe map</title>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>eBay globe map</title>-->
 <!--</head>-->
 <!--<body>-->
 <!--&lt;!&ndash;<script src="https://d3js.org/d3.v5.min.js"></script>&ndash;&gt;-->
@@ -24,36 +24,92 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./public/material/css/material.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+        integrity="sha384-DmABxgPhJN5jlTwituIyzIUk6oqyzf3+XuP7q3VfcWA2unxgim7OSSZKKf0KSsnh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./public/css/card.css">
+
+
 </head>
+
 <body>
-<svg id="defs">
-    <defs>
-        <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#323232;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#3c3c3c;stop-opacity:1" />
-        </linearGradient>
-        <filter id="glow">
-            <feColorMatrix type="matrix"
-                           values=
-                                   "0 0 0 0   0
+    <div class="card container" style="width: 18rem">
+        <img alt="Card image cap" class="card-img-top" src="./public/images/index.png">
+        <div class="card-body" style="border-bottom:2px solid #47B2B2;">
+
+            <!-- <i class="fa fa-map-marker"></i>  -->
+            <img src="./public/images/icon-location.png" width="12px" height="16px">
+            <h4 class="card-subtitle location" style="margin-left: 20px;font-size:0.7rem; color: #73787E; ">
+                <strong>China - Shanghai</strong></h4>
+            <h4 class="card-title" style="font-size:1rem;line-height: 30px"><strong>Network Status</strong></h4>
+        </div>
+        <div class="network-list">
+            <div class="row network"> 
+                <div class="col-2" style="padding-left:40px"><img src="./public/images/icon-green.png" width="10px"
+                        height="12px"></div>
+                <div class="col-6"><strong>0-75/s</strong></div>
+                <div class="col-1"></div>
+                <div class="col-2">3</div>
+            </div>
+            <div class="row network">
+                <div class="col-2" style="padding-left:40px"><img src="./public/images/icon-yellow.png" width="10px"
+                        height="12px"></div>
+                <div class="col-6"><strong>76-150b/s</strong></div>
+                <div class="col-1"></div>
+                <div class="col-2">2</div>
+            </div>
+
+            <div class="row network">
+                <div class="col-2" style="padding-left:40px"><img src="./public/images/icon-yellow.png" width="10px"
+                        height="12px"></div>
+                <div class="col-6"><strong>151-300b/s</strong></div>
+                <div class="col-1"></div>
+                <div class="col-2">1</div>
+            </div>
+            <div class="row network">
+                <div class="col-2" style="padding-left:40px"><img src="./public/images/icon-noNetwork.png" width="10px"
+                        height="12px"></div>
+                <div class="col-6"><strong>No network</strong></div>
+                <div class="col-1"></div>
+                <div class="col-2">1</div>
+            </div>
+
+            <!-- <a class="btn btn-outline-primary" href="#">Action</a> -->
+            <!-- <a class="btn btn-outline-primary" href="#">Action</a> -->
+        </div>
+    </div>
+
+
+    <svg id="defs">
+        <defs>
+            <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#323232;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#3c3c3c;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+                <feColorMatrix type="matrix" values="0 0 0 0   0
                                     0 0 0 0.9 0
                                     0 0 0 0.9 0
-                                    0 0 0 0.1  0"/>
-            <feGaussianBlur  stdDeviation="30" result="coloredBlur"/>
-            <!--<feComposite in="coloredBlur" in2="coloredBlur" result="Com1" operator="in"/>-->
-            <!--<feComposite in="Com1" in2="coloredBlur"  operator="in"/>-->
-            <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-        </filter>
-    </defs>
-</svg>
-<script src="http://marcneuwirth.com/experiments/globe/d3.custom.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script src="index.js"></script>
+                                    0 0 0 0.1  0" />
+                <feGaussianBlur stdDeviation="30" result="coloredBlur" />
+                <!--<feComposite in="coloredBlur" in2="coloredBlur" result="Com1" operator="in"/>-->
+                <!--<feComposite in="Com1" in2="coloredBlur"  operator="in"/>-->
+                <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+        </defs>
+    </svg>
+    <script src="http://marcneuwirth.com/experiments/globe/d3.custom.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="./public/material/js/material.min.js"></script>
+    <script src="index.js"></script>
 </body>
+
 </html>
