@@ -1,0 +1,104 @@
+/*body {*/
+    /*background-color: #444444;*/
+    /*background-image: -webkit-gradient(linear, left top, right bottom, from(#000), to(#333));*/
+    /*background-image: -webkit-linear-gradient(left top, #000, #333);*/
+    /*background-image: -moz-linear-gradient(left top, #000, #333);*/
+    /*overflow: hidden;*/
+/*}*/
+
+/*!*.stroke {*!*/
+    /*!*fill: none;*!*/
+    /*!*stroke: #000;*!*/
+    /*!*stroke-width: 1px;*!*/
+/*!*}*!*/
+
+/*.fill {*/
+    /*fill: blue;*/
+/*}*/
+
+/*!*.graticule {*!*/
+    /*!*fill: none;*!*/
+    /*!*stroke: #777;*!*/
+    /*!*stroke-width: .5px;*!*/
+    /*!*stroke-opacity: .5;*!*/
+/*!*}*!*/
+
+/*.cityPoint {*/
+    /*fill: green;*/
+/*}*/
+
+/*.labels {*/
+    /*font: 12px sans-serif;*/
+    /*fill: #fff;*/
+/*}*/
+
+/*.land {*/
+    /*fill: darkgrey;*/
+    /*!*fill: blue;*!*/
+/*}*/
+
+/*.boundary {*/
+    /*fill: none;*/
+    /*stroke: #fff;*/
+    /*stroke-width: .5px;*/
+/*}*/
+
+/*.arcs {*/
+    /*!*opacity:.1;*!*/
+    /*stroke: #1dcbca;*/
+    /*stroke-width: 3px;*/
+    /*stroke-linejoin: round;*/
+    /*fill:none;*/
+/*}*/
+/*.flyers {*/
+    /*stroke-width:1;*/
+    /*stroke: darkred;*/
+/*}*/
+
+/*.star {*/
+    /*fill: #fff;*/
+    /*stroke: rgba(255, 255, 255, .5);*/
+    /*stroke-width: .25px;*/
+/*}*/
+
+body {
+    background-color: #444444;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#000), to(#333));
+    background-image: -webkit-linear-gradient(left top, #000, #333);
+    background-image: -moz-linear-gradient(left top, #000, #333);
+    overflow: hidden;
+}
+
+#info {
+    position: absolute;
+    z-index: 10;
+    left: 25px;
+    top: 25px;
+}
+
+#defs {
+    height: 0;
+    width:0;
+}
+
+.frame {
+    fill: none;
+    pointer-events: all;
+}
+
+.feature {
+    fill: #000000;
+    stroke: #3c3c3c;
+    stroke-width: 3px;
+}
+
+.globe {
+    stroke: rgba(255, 255, 255, .5);
+    stroke-width: .25px;
+}
+
+.star {
+    fill: #fff;
+    stroke: rgba(255, 255, 255, .5);
+    stroke-width: .25px;
+}

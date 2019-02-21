@@ -1,0 +1,59 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>eBay globe map</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;<script src="https://d3js.org/d3.v5.min.js"></script>&ndash;&gt;-->
+<!--<link href="index.css" rel="stylesheet">-->
+
+<!--<script src="//d3js.org/d3.v3.min.js"></script>-->
+<!--<script src="//d3js.org/topojson.v1.min.js"></script>-->
+<!--<script src="//d3js.org/queue.v1.min.js"></script>-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>-->
+<!--<script src="mathsfunctions.js"></script>-->
+
+<!--<script src="index.js"></script>-->
+
+<!--&lt;!&ndash;<h2>eBay globe map</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;<svg width="820" height="620"></svg>&ndash;&gt;-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<svg id="defs">
+    <defs>
+        <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#323232;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#3c3c3c;stop-opacity:1" />
+        </linearGradient>
+        <filter id="glow">
+            <feColorMatrix type="matrix"
+                           values=
+                                   "0 0 0 0   0
+                                    0 0 0 0.9 0
+                                    0 0 0 0.9 0
+                                    0 0 0 0.1  0"/>
+            <feGaussianBlur  stdDeviation="30" result="coloredBlur"/>
+            <!--<feComposite in="coloredBlur" in2="coloredBlur" result="Com1" operator="in"/>-->
+            <!--<feComposite in="Com1" in2="coloredBlur"  operator="in"/>-->
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+</svg>
+<script src="http://marcneuwirth.com/experiments/globe/d3.custom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
