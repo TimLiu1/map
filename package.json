@@ -1,0 +1,25 @@
+{
+  "name": "globe-map",
+  "version": "1.0.0",
+  "description": "map for world",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.corp.ebay.com:lingwu1/globe-map.git"
+  },
+  "keywords": [
+    "map",
+    "world"
+  ],
+  "author": "wuling",
+  "license": "ISC",
+  "dependencies": {
+    "daemonite-material": "^4.1.1",
+    "gulp": "^3.9.1",
+    "gulp-webserver": "^0.9.1"
+  }
+}
