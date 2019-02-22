@@ -12,11 +12,6 @@ gulp.task('webserver', function () {
         enable: true,
         path: './'
       }
-    //   proxies: [
-    //     {
-    //         source: '/api', target: 'http://jsonplaceholder.typicode.com'
-    //     }
-    //   ]
     }))
 });
 gulp.task('default', ['webserver'], function () {
