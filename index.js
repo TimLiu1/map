@@ -546,14 +546,56 @@ $.ajax({
 
                 var links = svg.append("g"),
                     linksFeatures;
-
+                var colors = { clickable: 'darkgrey', hover: 'blue', clicked: "red", clickhover: "darkred" };
+                var countryTooltip = d3.select("body").append("div").attr("class","countryTooltip")
                 //Add all of the countries to the globe
                 d3.json("world-countries.json", function(collection) {
                     features = g.selectAll(".feature").data(collection.features);
 
                     features.enter().append("path")
                         .attr("class", "feature")
-                        .attr("d", function(d){ return path(circle.clip(d)); });
+                        .attr("d", function(d){ return path(circle.clip(d)); })
+                        .on("click",function () {
+                            // console.log('------click- this ooo---',this)
+                        //     d3.selectAll(".clicked")
+                        //         .classed("clicked", false)
+                        //         .attr("fill", colors.clickable);
+                        // d3.select(this)
+                        //     .classed("clicked", true)
+                        //     .attr("fill", colors.clicked);
+
+                        // (function transition() {
+                        //     d3.select(".clicked").transition()
+                        //         .duration(1000)
+                        //         .tween("rotate", function() {
+                        //             var p = d3.geo.centroid(countries[d3.select(this).attr("data-country-id")]),
+                        //                 r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+                        //             return function (t) {
+                        //                 projection.rotate(r(t));
+                        //                 redraw()
+                        //             }
+                        //         });
+                        // })();
+                        })
+                        .on("mouseover",function (d) {
+                            countryTooltip.text(d.properties.name)
+                                .style("left", (d3.event.pageX + 7) + "px")
+                                .style("top", (d3.event.pageY - 15) + "px")
+                                .style("display", "block")
+                                .style("opacity", 1);
+                        })
+                        .on("mousemove",function (d) {
+
+                            d3.select(this).attr("fill", "darkgrey");
+
+                            countryTooltip.style("left", (d3.event.pageX + 7) + "px")
+                                .style("top", (d3.event.pageY - 15) + "px");
+
+                        }).on("mouseout",function () {
+                            d3.select(this).attr("fill", "#000000");
+                            countryTooltip.style("opacity", 0)
+                                .style("display", "none");
+                        })
                 });
                 // cities marker
                 devFeatures = point.selectAll(".dev")
