@@ -439,7 +439,6 @@ $.ajax({
         // console.log('---data from api------',data.data.length)
         var citiesData = []
         var cities = data.data;
-        console.log('cities', cities)
         for (var i = 0; i < cities.length; i++) {
             if (cities[i].city != null) {
                 citiesData.push(
@@ -577,7 +576,6 @@ $.ajax({
                                 renderCard(city)
                             }
                         })
-                        
                     })
                     .attr("d", function (d) {
                         return path(circle.clip(d));
