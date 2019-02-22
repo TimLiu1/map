@@ -439,16 +439,21 @@ $.ajax({
         // console.log('---data from api------',data.data.length)
         var citiesData = []
         var cities = data.data;
-        for(var i = 0; i < cities.length ; i++){
-                if(cities[i].city !=null){
-                    citiesData.push(
-                    { "type": "Feature",
+        for (var i = 0; i < cities.length; i++) {
+            if (cities[i].city != null) {
+                citiesData.push(
+                    {
+                        "id": cities[i].id,
+                        "type": "Feature",
                         "properties": { "name": cities[i].city },
-                        "geometry": { "type": "Point",
-                            "coordinates": [ cities[i].longitude, cities[i].latitude ] } })
-                }
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [cities[i].longitude, cities[i].latitude]
+                        }
+                    })
             }
-        ;(function(w, d3, undefined){
+        }
+        ; (function (w, d3, undefined) {
             "use strict";
 
             var width, height;
@@ -546,56 +551,14 @@ $.ajax({
 
                 var links = svg.append("g"),
                     linksFeatures;
-                var colors = { clickable: 'darkgrey', hover: 'blue', clicked: "red", clickhover: "darkred" };
-                var countryTooltip = d3.select("body").append("div").attr("class","countryTooltip")
+
                 //Add all of the countries to the globe
                 d3.json("world-countries.json", function(collection) {
                     features = g.selectAll(".feature").data(collection.features);
 
                     features.enter().append("path")
                         .attr("class", "feature")
-                        .attr("d", function(d){ return path(circle.clip(d)); })
-                        .on("click",function () {
-                            // console.log('------click- this ooo---',this)
-                        //     d3.selectAll(".clicked")
-                        //         .classed("clicked", false)
-                        //         .attr("fill", colors.clickable);
-                        // d3.select(this)
-                        //     .classed("clicked", true)
-                        //     .attr("fill", colors.clicked);
-
-                        // (function transition() {
-                        //     d3.select(".clicked").transition()
-                        //         .duration(1000)
-                        //         .tween("rotate", function() {
-                        //             var p = d3.geo.centroid(countries[d3.select(this).attr("data-country-id")]),
-                        //                 r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
-                        //             return function (t) {
-                        //                 projection.rotate(r(t));
-                        //                 redraw()
-                        //             }
-                        //         });
-                        // })();
-                        })
-                        .on("mouseover",function (d) {
-                            countryTooltip.text(d.properties.name)
-                                .style("left", (d3.event.pageX + 7) + "px")
-                                .style("top", (d3.event.pageY - 15) + "px")
-                                .style("display", "block")
-                                .style("opacity", 1);
-                        })
-                        .on("mousemove",function (d) {
-
-                            d3.select(this).attr("fill", "darkgrey");
-
-                            countryTooltip.style("left", (d3.event.pageX + 7) + "px")
-                                .style("top", (d3.event.pageY - 15) + "px");
-
-                        }).on("mouseout",function () {
-                            d3.select(this).attr("fill", "#000000");
-                            countryTooltip.style("opacity", 0)
-                                .style("display", "none");
-                        })
+                        .attr("d", function(d){ return path(circle.clip(d)); });
                 });
                 // cities marker
                 devFeatures = point.selectAll(".dev")
@@ -603,9 +566,19 @@ $.ajax({
                 devFeatures.enter()
                     .append("path")
                     .attr("class", "dev")
-                    .attr("d", function(d) {
+                    .on('click', function () {//选择所有的点添加点击事件
+                        var id = $(this).attr('id');
+                        cities.forEach((city)=>{
+                            if(id == city.id){
+                                renderCard(city)
+                            }
+                        })
+                    })
+                    .attr("d", function (d) {
                         return path(circle.clip(d));
-                    });
+                    }).attr("id", function (d) {
+                        return d.id
+                    });;
 
                 // cities connection
                 var linksData = []
