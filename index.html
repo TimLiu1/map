@@ -49,9 +49,9 @@
             <span><strong>0.89Mbps 0.79Mbps</strong></span>
             <span><strong>Utilization: 23%</strong></span>
         </div>
-        <div class="card container" style="width: 18rem">
+        <div class="card card-container" id="card-container" onclick="hiddenCard()" style="width: 18rem">
 
-            <img src="./public/images/icon-close.png" class="delete" />
+            <img src="./public/images/icon-close.png" class="delete" onclick="hiddenCard()" />
             <img alt="Card image cap" class="card-img-top" src="./public/images/index.png">
 
             <div class="card-body" style="border-bottom:2px solid #47B2B2;">
@@ -124,6 +124,7 @@
     <script src="http://marcneuwirth.com/experiments/globe/d3.custom.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="./public/material/js/material.min.js"></script>
+    <script src="./public/js/card.js"></script>
     <script src="index.js"></script>
 </body>
 
