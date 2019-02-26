@@ -14,7 +14,7 @@ function renderCard(city) {
     $('#inBandwithRate').text('' + city.inBandwithRate + 'b/s')
     $('#location-title').text(city.city)
     $('#rate-title').text(city.city)
-    $('#utilization').text('Utilization: ' + city.outBandwithRate / city.bandwith + '%')
+    $('#utilization').text('Utilization: ' + (city.outBandwithRate / city.bandwith)*100 + '%')
 
 }
 function change() {

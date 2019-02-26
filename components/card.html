@@ -1,13 +1,27 @@
 <div>
     <div class="base-title">
-        <img style="margin-right: 15px" src="./public/images/icon-location.png" height="20px">
+        <img style="margin-right: 15px" src="./public/images/icon-location-white.png" height="20px">
         <h4 ><strong><span id="city-title" ></span> </strong></h5>
+            <img style="margin-left: 15px" src="./public/images/icon-caretDown.png" width="15px" height="10px">
     </div>
     <div class="card intro" style="width: 12rem;">
         <span><strong id="rate-title"></strong></span>
         <span ><strong ><span id="bandwith"></span> </strong></span>
-        <span><strong> <span id="outBandwithRate"></span> <span id="inBandwithRate"></span></strong></span>
-        <span><strong><span id="utilization"></span> </strong></span>
+       <div style="display:flex">
+            <strong> <span id="outBandwithRate"> </span>
+                <img style="margin-left: 2px" src="./public/images/icon-arrowUp.png" height="13px"> 
+            </strong>
+            <strong> 
+              <span id="inBandwithRate" style="margin-left:20px;"></span>
+              <img style="margin-left: 2px" src="./public/images/icon-arrowDown.png" height="13px"> 
+         
+            </strong>
+
+           
+
+               </div> 
+        <span><strong><span id="utilization"></span>
+        </strong></span>
     </div>
     <div class="card card-container" id="card-container" onclick="hiddenCard()" style="width: 18rem">
 
