@@ -329,6 +329,53 @@ function load(error, bases, lilypads, usfunded, world, request) {
                     renderCardLocation(city)
                 }
             })
+
+
+
+
+            var places = {
+                GSFC: [-76.852587, 38.991621],
+                KSC: [-80.650813, 28.524963]
+            };
+            var route =[{
+                "type": "Feature",
+                "geometry": {
+                    "type": "LineString",
+                    coordinates: [
+                        places.GSFC,
+                        places.KSC
+                    ]
+                }
+            }];
+            
+            linksFeatures = links.selectAll("path")
+                .data(route)
+            linksFeatures.enter()
+                .append("path")
+                .attr("class", "arcs")
+                .on('mouseover', () => {
+                    console.log('hello')
+                })
+                .attr("d", function (d) {
+                    return path(circle.clip(d));
+                })
+                .on('mouseover', function () {//选择所有的点添加点击事件
+                    var id = $(this).attr('id');
+
+                    cities.forEach((city) => {
+                        if (id == city.id) {
+                            renderCard(city)
+                        }
+                    })
+                }).attr("id", function (d) {
+                    return d.id
+                })
+                .call(linetransition)
+
+
+
+
+
     
         })
 
