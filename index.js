@@ -153,6 +153,7 @@ $.ajax({
                 cities.forEach(function (e,i,value) {
                     if( e.city !== null){
                         linksData.push({
+                            "id": e.id,
                             "type": "Feature",
                             "geometry": { "type": "LineString",
                                 "coordinates": [[e.longitude,e.latitude],[e.MainLongitude,e.MainLatitude]] }})
@@ -163,8 +164,22 @@ $.ajax({
                 linksFeatures.enter()
                     .append("path")
                     .attr("class","arcs")
+                    .on('mouseover',() =>{
+                        console.log('hello')
+                    })
                     .attr("d",function (d) {
                         return path(circle.clip(d));
+                    })
+                    .on('mouseover', function () {//选择所有的点添加点击事件
+                        var id = $(this).attr('id');
+                        console.log(32323,id)
+                        cities.forEach((city)=>{
+                            if(id == city.id){
+                                renderCard(city)
+                            }
+                        })
+                    }).attr("id", function (d) {
+                        return d.id
                     })
                     .call(linetransition)
 

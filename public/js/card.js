@@ -10,8 +10,8 @@ function renderCard(city) {
     console.log('city', city);
     $('#city-title').text(city.city)
     $('#bandwith').text('Bandwith: ' + Math.ceil(city.bandwith / 1024 / 1024 / 1024) + 'Gbps')
-    $('#outBandwithRate').text('' + city.outBandwithRate + 'b/s')
-    $('#inBandwithRate').text('' + city.inBandwithRate + 'b/s')
+    $('#outBandwithRate').text('' + city.outBandwithRate || 0 + 'b/s')
+    $('#inBandwithRate').text('' + city.inBandwithRate || 0 + 'b/s')
     $('#location-title').text(city.city)
     $('#rate-title').text(city.city)
     $('#utilization').text('Utilization: ' + (city.outBandwithRate / city.bandwith)*100 + '%')
