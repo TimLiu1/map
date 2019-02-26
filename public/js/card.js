@@ -22,13 +22,13 @@ function renderCard(city) {
     $('#rate-title').text(city.mainCity)
     $('#rate-title-final').text(city.city)
     // rate-title-final
-    $('#utilization').text('Utilization: ' + ((city.outBandwithRate / city.bandwith) * 100).toFixed(2) + '%')
+    $('#utilization').text('Utilization: ' +getUtilization(city.outBandwith,city.inBandwith,city.bandwith)+ '%')
 
 }
-function change() {
-    console.log(23)
-    $('#city-title').text('123')
 
+function getUtilization(outBandwithRate, inBandwithRate, bandwith) {
+    let bandwithRate = outBandwithRate > inBandwithRate ? outBandwithRate : inBandwithRate
+    return ((bandwithRate/bandwith)*100).toFixed(2)
 }
 
 function getNumber(num) {

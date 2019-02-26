@@ -1,6 +1,7 @@
 
 $.ajax({
     url:"http://lvs-hubou-001.corp.ebay.com/api/network/list",
+    // url:"http://localhost:8008/network/list",
     method: 'GET',
     dataType: 'json',
     success: function (data) {
