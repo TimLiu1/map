@@ -331,6 +331,16 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .append("title")
         .text(function (d) { return "US Funded: " + d.name });
 
+    svg.append("g").selectAll("text")
+        .data(citiesData)
+        .enter()
+        .append("text")
+        .attr("class", "label")
+        .text(function (d) {
+            console.log('======the-----dddd',d.properties.name)
+            return d.properties.name
+        })
+    labels()
     // svg.selectAll(".base")
     //     .data(bases)
     //     .enter().append("circle")
@@ -358,12 +368,41 @@ function load(error, bases, lilypads, usfunded, world, request) {
                 }
             })
 
-            RequestGet('/network/list?mainDevice='+tempCity.mainDevice,(err,result) =>{
+            RequestGet('/network/list?mainDevice='+tempCity.device,(err,result) =>{
                 console.log('result',result)
                 let data = result.data;
                 console.log('///',data)
+
+
+
+
+                var citiess = getCityData(data);
+                console.log("citiess")
+                console.log(citiess)
+                svg.selectAll(".usfunded")
+                .data(citiess)
+                .enter().append("circle")
+                .attr("fill", "red")
+                .attr("r", 8)
+                .attr("id", function (d) {
+                    return d.id
+                })
+                .append("title")
+                .text(function (d) { return "US Funded: " + d.name });
+
+
+
+
+
+
                 var routes = getLineData(data);
                 console.log(routes)
+
+
+
+
+
+
                 // console.log(result)
                 svg.append("g").attr("class", "flyers")
                 .selectAll("path").data(routes)
@@ -409,7 +448,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
     function zoomed() {
         // var dx = d3.event.sourceEvent.movementX;
         // var dy = d3.event.sourceEvent.movementY;
-        console.log('------haa------', d3.event)
+        // console.log('------haa------',d3.event)
         var event = d3.event.sourceEvent.type;
 
         if (event === "wheel") {
@@ -427,6 +466,27 @@ function load(error, bases, lilypads, usfunded, world, request) {
     } // zoomed()
 
 } // load()
+
+function labels() {
+    var centerPos = projection.invert([width / 2, height / 2]);
+    // var arc = d3.geo.greatArc();
+    svg.selectAll("text")
+        .attr("transform", function (d) {
+            var loc = projection(d.geometry.coordinates),
+                x = loc[0],
+                y = loc[1];
+            var offset = 5;
+            return "translate(" + (x + offset) + "," + (y - 3) + ")"
+        })
+    .style("display", function (d) {
+        console.log('----dd--hahahaqha-----',d)
+        var lon = d.geometry.coordinates[0]
+        var lat = d.geometry.coordinates[1]
+        var d = d3.geoDistance([lon,lat], centerPos);
+        console.log('=========',d)
+        return (d > 1.57) ? 'none' : 'inline';
+    });
+}
 
 d3.geoInertiaDrag(svg, reproject);
 
@@ -461,7 +521,8 @@ function reproject() {
             var dist = start_dist < end_dist ? start_dist : end_dist;
 
             return fade(dist)
-        })
+    })
+    labels()
     // d3.selectAll(".flyer").attr("d", path)
 }
 
