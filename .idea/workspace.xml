@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0eb95007-1f4f-4cab-bf5d-275b2fb7069f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/index2.css" afterPath="$PROJECT_DIR$/index2.css" />
-      <change beforePath="$PROJECT_DIR$/index2.js" afterPath="$PROJECT_DIR$/index2.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -90,7 +88,7 @@
                 <entry file="file://$PROJECT_DIR$/index2.js">
                   <provider selected="true" editor-type-id="text-editor">
                     <state relative-caret-position="211">
-                      <caret line="416" column="34" lean-forward="false" selection-start-line="416" selection-start-column="34" selection-end-line="416" selection-end-column="34" />
+                      <caret line="462" column="34" lean-forward="false" selection-start-line="462" selection-start-column="34" selection-end-line="462" selection-end-column="34" />
                       <folding>
                         <element signature="e#7992#8021#0" expanded="false" />
                         <element signature="e#9376#9401#0" expanded="false" />
@@ -367,11 +365,18 @@
       <option name="project" value="LOCAL" />
       <updated>1551190113498</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add label">
+      <created>1551191661747</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1551191661747</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113682000" />
+    <option name="totallyTimeSpent" value="113730000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -427,7 +432,8 @@
     <MESSAGE value="Merge branch 'master' of https://github.corp.ebay.com/lingwu1/globe-map&#10;&#10;# Conflicts:&#10;#&#9;index.js" />
     <MESSAGE value="auto rotate" />
     <MESSAGE value="Merge branch 'master' of https://github.corp.ebay.com/lingwu1/globe-map&#10;&#10;# Conflicts:&#10;#&#9;index2.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.corp.ebay.com/lingwu1/globe-map&#10;&#10;# Conflicts:&#10;#&#9;index2.js" />
+    <MESSAGE value="add label" />
+    <option name="LAST_COMMIT_MESSAGE" value="add label" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -729,7 +735,7 @@
     <entry file="file://$PROJECT_DIR$/index2.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
-          <caret line="416" column="34" lean-forward="false" selection-start-line="416" selection-start-column="34" selection-end-line="416" selection-end-column="34" />
+          <caret line="462" column="34" lean-forward="false" selection-start-line="462" selection-start-column="34" selection-end-line="462" selection-end-column="34" />
           <folding>
             <element signature="e#7992#8021#0" expanded="false" />
             <element signature="e#9376#9401#0" expanded="false" />
