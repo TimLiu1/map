@@ -28,6 +28,10 @@ function renderCard(city) {
 
 function getUtilization(outBandwithRate, inBandwithRate, bandwith) {
     let bandwithRate = outBandwithRate > inBandwithRate ? outBandwithRate : inBandwithRate
+    console.log('bandwithRate',bandwithRate);
+    console.log('outBandwithRate',outBandwithRate);
+    console.log('bandwith',bandwith);
+    console.log('inBandwithRate',inBandwithRate);
     return ((bandwithRate/bandwith)*100).toFixed(2)
 }
 
