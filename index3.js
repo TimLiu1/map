@@ -173,7 +173,6 @@ $.ajax({
                     })
                     .on('mouseover', function () {//选择所有的点添加点击事件
                         var id = $(this).attr('id');
-                        
                         cities.forEach((city)=>{
                             if(id == city.id){
                                 renderCard(city)
