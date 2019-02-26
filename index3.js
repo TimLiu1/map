@@ -1,6 +1,6 @@
 
 $.ajax({
-    url:"http://lvs-hubou-001.corp.ebay.com/api/network/list",
+    url: "http://lvs-hubou-001.corp.ebay.com/api/network/list",
     // url:"http://localhost:8008/network/list",
     method: 'GET',
     dataType: 'json',
@@ -26,12 +26,12 @@ $.ajax({
             "use strict";
 
             var width, height;
-            function getSize(){
+            function getSize() {
                 width = w.innerWidth,
                     height = w.innerHeight;
 
-                if(width === 0 || height === 0){
-                    setTimeout(function(){
+                if (width === 0 || height === 0) {
+                    setTimeout(function () {
                         getSize();
                     }, 100);
                 }
@@ -40,7 +40,7 @@ $.ajax({
                 }
             }
 
-            function init(){
+            function init() {
 
                 //Setup path for outerspace
                 var space = d3.geo.azimuthal()
@@ -90,7 +90,7 @@ $.ajax({
                     .enter()
                     .append("path")
                     .attr("class", "star")
-                    .attr("d", function(d){
+                    .attr("d", function (d) {
                         spacePath.pointRadius(d.properties.radius);
                         return spacePath(d);
                     });
@@ -122,12 +122,12 @@ $.ajax({
                     linksFeatures;
 
                 //Add all of the countries to the globe
-                d3.json("world-countries.json", function(collection) {
+                d3.json("world-countries.json", function (collection) {
                     features = g.selectAll(".feature").data(collection.features);
 
                     features.enter().append("path")
                         .attr("class", "feature")
-                        .attr("d", function(d){ return path(circle.clip(d)); });
+                        .attr("d", function (d) { return path(circle.clip(d)); });
                 });
                 // cities marker
                 devFeatures = point.selectAll(".dev")
@@ -137,11 +137,35 @@ $.ajax({
                     .attr("class", "dev")
                     .on('click', function () {//选择所有的点添加点击事件
                         var id = $(this).attr('id');
-                        cities.forEach((city)=>{
-                            if(id == city.id){
+                        cities.forEach((city) => {
+                            if (id == city.id) {
                                 renderCardLocation(city)
                             }
                         })
+
+                        linksFeatures = links.selectAll("path")
+                            .data(linksData)
+                        linksFeatures.enter()
+                            .append("path")
+                            .attr("class", "arcs")
+                            .on('mouseover', () => {
+                                console.log('hello')
+                            })
+                            .attr("d", function (d) {
+                                return path(circle.clip(d));
+                            })
+                            .on('mouseover', function () {//选择所有的点添加点击事件
+                                var id = $(this).attr('id');
+
+                                cities.forEach((city) => {
+                                    if (id == city.id) {
+                                        renderCard(city)
+                                    }
+                                })
+                            }).attr("id", function (d) {
+                                return d.id
+                            })
+                            .call(linetransition)
                     })
                     .attr("d", function (d) {
                         return path(circle.clip(d));
@@ -151,31 +175,33 @@ $.ajax({
 
                 // cities connection
                 var linksData = []
-                cities.forEach(function (e,i,value) {
-                    if( e.city !== null){
+                cities.forEach(function (e, i, value) {
+                    if (e.city !== null) {
                         linksData.push({
                             "id": e.id,
                             "type": "Feature",
-                            "geometry": { "type": "LineString",
-                                "coordinates": [[e.longitude,e.latitude],[e.MainLongitude,e.MainLatitude]] }})
+                            "geometry": {
+                                "type": "LineString",
+                                "coordinates": [[e.longitude, e.latitude], [e.MainLongitude, e.MainLatitude]]
+                            }
+                        })
                     }
                 })
                 linksFeatures = links.selectAll("path")
                     .data(linksData)
                 linksFeatures.enter()
                     .append("path")
-                    .attr("class","arcs")
-                    .on('mouseover',() =>{
+                    .attr("class", "arcs")
+                    .on('mouseover', () => {
                         console.log('hello')
                     })
-                    .attr("d",function (d) {
+                    .attr("d", function (d) {
                         return path(circle.clip(d));
                     })
                     .on('mouseover', function () {//选择所有的点添加点击事件
                         var id = $(this).attr('id');
-                        
-                        cities.forEach((city)=>{
-                            if(id == city.id){
+                        cities.forEach((city) => {
+                            if (id == city.id) {
                                 renderCard(city)
                             }
                         })
@@ -185,14 +211,14 @@ $.ajax({
                     .call(linetransition)
 
                 function linetransition(path) {
-                path.transition()
-                    .duration(1000)
-                    .attrTween("stroke-dasharray", function () {
-                    var len = this.getTotalLength();
-                    return function(t) {
-                        return (d3.interpolate('0,' + len, len + ',0'))(t)
-                        };
-                    })
+                    path.transition()
+                        .duration(1000)
+                        .attrTween("stroke-dasharray", function () {
+                            var len = this.getTotalLength();
+                            return function (t) {
+                                return (d3.interpolate('0,' + len, len + ',0'))(t)
+                            };
+                        })
                 }
                 //cities label
                 lableFeatures = label.selectAll("text")
@@ -200,43 +226,43 @@ $.ajax({
 
                 lableFeatures.enter()
                     .append("text")
-                    .attr("class","label")
+                    .attr("class", "label")
                     .text(function (d) {
                         return d.properties.name
                     })
                 labels()
-                function labels () {
-                    var centerPos = projection.invert([width/2,height/2]);
+                function labels() {
+                    var centerPos = projection.invert([width / 2, height / 2]);
                     var arc = d3.geo.greatArc();
                     lableFeatures
-                        .attr("transform", function(d) {
+                        .attr("transform", function (d) {
                             var loc = projection(d.geometry.coordinates),
                                 x = loc[0],
                                 y = loc[1];
                             var offset = 5;
-                            return "translate(" + (x+offset) + "," + (y-3) + ")"
+                            return "translate(" + (x + offset) + "," + (y - 3) + ")"
                         })
-                        .style("display",function(d) {
-                            var d = arc.distance({source: d.geometry.coordinates, target: centerPos});
+                        .style("display", function (d) {
+                            var d = arc.distance({ source: d.geometry.coordinates, target: centerPos });
                             return (d > 1.57) ? 'none' : 'inline';
                             return 'inline';
                         });
                 }
                 //Redraw all items with new projections
-                function redraw(){
-                    features.attr("d", function(d){
+                function redraw() {
+                    features.attr("d", function (d) {
                         return path(circle.clip(d));
                     });
-                    devFeatures.attr("d", function(d) {
+                    devFeatures.attr("d", function (d) {
                         return path(circle.clip(d));
                     });
-                    lableFeatures.attr("d",function (d) {
+                    lableFeatures.attr("d", function (d) {
                         return path(circle.clip(d));
                     })
-                    linksFeatures.attr("d",function (d) {
+                    linksFeatures.attr("d", function (d) {
                         return path(circle.clip(d));
                     })
-                    stars.attr("d", function(d){
+                    stars.attr("d", function (d) {
                         spacePath.pointRadius(d.properties.radius);
                         return spacePath(d);
                     });
@@ -245,7 +271,7 @@ $.ajax({
 
 
                 function move() {
-                    if(d3.event){
+                    if (d3.event) {
                         var scale = d3.event.scale;
                         var origin = [d3.event.translate[0] * -1, d3.event.translate[1]];
 
@@ -265,9 +291,9 @@ $.ajax({
                 }
 
 
-                function createStars(number){
+                function createStars(number) {
                     var data = [];
-                    for(var i = 0; i < number; i++){
+                    for (var i = 0; i < number; i++) {
                         data.push({
                             geometry: {
                                 type: 'Point',
@@ -282,7 +308,7 @@ $.ajax({
                     return data;
                 }
 
-                function randomLonLat(){
+                function randomLonLat() {
                     return [Math.random() * 360 - 180, Math.random() * 180 - 90];
                 }
             }

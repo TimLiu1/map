@@ -164,9 +164,6 @@ function delta(path) {
     }
 }
 
-var timer_ret_val = false;
-
-
 d3.queue()
     .defer(d3.csv, "./new-data/bases.csv")
     .defer(d3.csv, "./new-data/lilypads.csv")
@@ -278,10 +275,21 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .selectAll("path").data(linksData)
         .enter().append("path")
         .attr("class","flyer")
-        // .attr("d", path)
         .attr("d", function(d) {return swoosh(flying_arc(d))})
+        .attr("id", function (d) {
+            console.log(22)
+            return d.id
+        })
         .call(linetransition)
-
+        svg.selectAll("path").on('mouseover',(e) =>{
+            var id = e.id
+            console.log('id',id)
+            cities.forEach((city)=>{
+                if(id == city.id){
+                    renderCard(city)
+                }
+            })
+        })
     // function flying_arc(pts) {
     //
     //     var source = pts.geometry.coordinates[0],
@@ -312,7 +320,10 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .data(citiesData)
         .enter().append("circle")
         .attr("fill", "red")
-        .attr("r", 2.5)
+        .attr("r", 8)
+        .attr("id", function (d) {
+            return d.id
+        })
         .append("title")
         .text(function(d) { return "US Funded: " + d.name });
 
@@ -329,13 +340,19 @@ function load(error, bases, lilypads, usfunded, world, request) {
     //     .attr("stroke", "#000")
     //     .attr("stroke-width", 2);
 
-    // svg.selectAll("circle")
-    //     .on("click", function(d) {
-    //         title.html(d.name + ", " + d.country);
-    //         notes.html("Notes");
-    //         notesP.html(d.notes);
-    //
-    //     })
+    svg.selectAll("circle")
+        .on("click", function(d) {
+            console.log(2323)
+            var id = $(this).attr('id');
+            console.log('id',id);
+            cities.forEach((city)=>{
+                if(id == city.id){
+                    console.log(21323)
+                    renderCardLocation(city)
+                }
+            })
+
+        })
 
     reproject();
 

@@ -22,7 +22,7 @@ function renderCard(city) {
     $('#rate-title').text(city.mainCity)
     $('#rate-title-final').text(city.city)
     // rate-title-final
-    $('#utilization').text('Utilization: ' +getUtilization(city.outBandwith,city.inBandwith,city.bandwith)+ '%')
+    $('#utilization').text('Utilization: ' +getUtilization(city.outBandwithRate,city.inBandwithRate,city.bandwith)+ '%')
 
 }
 
