@@ -1,13 +1,30 @@
 <div>
     <div class="base-title">
-        <img style="margin-right: 15px" src="./public/images/icon-location.png" height="20px">
+        <img style="margin-right: 15px" src="./public/images/icon-location-white.png" height="20px">
         <h4 ><strong><span id="city-title" ></span> </strong></h5>
+            <img style="margin-left: 15px" src="./public/images/icon-caretDown.png" width="15px" height="10px">
     </div>
     <div class="card intro" style="width: 12rem;">
-        <span><strong id="rate-title"></strong></span>
+            <div style="display:flex">
+        <span><strong id="rate-title"></strong></span>  -> 
+        <span><strong id="rate-title-final"></strong></span>
+        </div>
         <span ><strong ><span id="bandwith"></span> </strong></span>
-        <span><strong> <span id="outBandwithRate"></span> <span id="inBandwithRate"></span></strong></span>
-        <span><strong><span id="utilization"></span> </strong></span>
+       <div style="display:flex">
+            <strong> <span id="outBandwithRate"> </span>
+                <img style="margin-left: 2px" src="./public/images/icon-arrowUp.png" height="13px"> 
+            </strong>
+            <strong> 
+              <span id="inBandwithRate" style="margin-left:20px;"></span>
+              <img style="margin-left: 2px" src="./public/images/icon-arrowDown.png" height="13px"> 
+         
+            </strong>
+
+           
+
+               </div> 
+        <span><strong><span id="utilization"></span>
+        </strong></span>
     </div>
     <div class="card card-container" id="card-container" onclick="hiddenCard()" style="width: 18rem">
 
@@ -26,16 +43,16 @@
             <div class="row network">
                 <div class="col-1" style="padding-left:40px"><img src="./public/images/icon-green.png" width="10px"
                         height="12px"></div>
-                <div class="col-6" style="margin-left:-12px"><strong>0-75/s</strong></div>
+                <div class="col-6" style="margin-left:-12px"><strong>0-75b/s</strong></div>
                 <div class="col-1"></div>
-                <div class="col-2">3</div>
+                <!-- <div class="col-2">3</div> -->
             </div>
             <div class="row network">
                 <div class="col-1" style="padding-left:40px"><img src="./public/images/icon-yellow.png" width="10px"
                         height="12px"></div>
                 <div class="col-6" style="margin-left:-12px"><strong>76-150b/s</strong></div>
                 <div class="col-1"></div>
-                <div class="col-2">2</div>
+                <!-- <div class="col-2">2</div> -->
             </div>
 
             <div class="row network">
@@ -43,14 +60,14 @@
                         height="12px"></div>
                 <div class="col-6" style="margin-left:-12px"><strong>151-300b/s</strong></div>
                 <div class="col-1"></div>
-                <div class="col-2">1</div>
+                <!-- <div class="col-2">1</div> -->
             </div>
             <div class="row network">
                 <div class="col-1" style="padding-left:40px"><img src="./public/images/icon-noNetwork.png" width="10px"
                         height="12px"></div>
                 <div class="col-6" style="margin-left:-12px"><strong>No network</strong></div>
                 <div class="col-1"></div>
-                <div class="col-2">1</div>
+                <!-- <div class="col-2">1</div> -->
             </div>
 
             <!-- <a class="btn btn-outline-primary" href="#">Action</a> -->

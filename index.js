@@ -1,3 +1,4 @@
+
 $.ajax({
     url:"http://lvs-hubou-001.corp.ebay.com/api/network/list",
     method: 'GET',
@@ -136,6 +137,7 @@ $.ajax({
                 var links = svg.append("g"),
                     linksFeatures;
 
+
                 // var countryTooltip = d3.select("body").append("div").attr("class","countryTooltip")
                 //Add all of the countries to the globe
                 d3.json("world-countries.json", function(collection) {
@@ -207,7 +209,7 @@ $.ajax({
                         var id = $(this).attr('id');
                         cities.forEach((city)=>{
                             if(id == city.id){
-                                renderCard(city)
+                                renderCardLocation(city)
                             }
                         })
                     })
@@ -222,6 +224,7 @@ $.ajax({
                 cities.forEach(function (e,i,value) {
                     if( e.city !== null){
                         linksData.push({
+                            "id": e.id,
                             "type": "Feature",
                             "geometry": { "type": "LineString",
                                 "coordinates": [[e.longitude,e.latitude],[e.MainLongitude,e.MainLatitude]] }})
@@ -232,7 +235,21 @@ $.ajax({
                 linksFeatures.enter()
                     .append("path")
                     .attr("class","arcs")
+                    .on('mouseover',() =>{
+                        console.log('hello')
+                    })
                     .attr("d",path)
+                    .on('mouseover', function () {//选择所有的点添加点击事件
+                        var id = $(this).attr('id');
+                        
+                        cities.forEach((city)=>{
+                            if(id == city.id){
+                                renderCard(city)
+                            }
+                        })
+                    }).attr("id", function (d) {
+                        return d.id
+                    })
                     .call(linetransition)
 
                 function linetransition(path) {
@@ -259,6 +276,14 @@ $.ajax({
                         }
                     })
 
+                // var inertia = d3.geoInertiaDrag(svg, redraw());
+                // d3.timer(function(e) {
+                //     if (inertia.timer) return;
+                //     var rotate = projection.rotate();
+                //     projection.rotate([rotate[0] + 0.12, rotate[1], rotate[2]]);
+                //     draw();
+                // });
+
                 labels()
                 function labels () {
                     var centerPos = projection.invert([width/2,height/2]);
@@ -278,7 +303,8 @@ $.ajax({
                 }
                 //Redraw all items with new projections
                 function redraw(){
-                    features.attr("d", path);
+                    // features.attr("d", path);
+                    svg.selectAll(".feature").attr("d", path)
                     devFeatures.attr("d", path);
                     lableFeatures.attr("d",path);
                     linksFeatures.attr("d",path)
@@ -350,7 +376,6 @@ $.ajax({
                 // autoZoom(hardCodeChina)
                 //auto zoom
                 function autoZoom(d) {
-                    console.log('-----here---calling-----')
                     // svg.transition()
                     //     .duration(750)
                     //     .call(zoom.translate([220, 220])
@@ -384,9 +409,18 @@ $.ajax({
                     return fa(dist)
                 }
 
+                var inertia = d3.geoInertiaDrag(svg, redraw);
+                d3.timer(function(e) {
+                    if (inertia.timer) return;
+                    var rotate = projection.rotate();
+                    projection.rotate([rotate[0] + 0.12, rotate[1], rotate[2]]);
+                    redraw();
+                });
+
             }
 
             getSize();
+
 
         }(window, d3));
         // return citiesData;
