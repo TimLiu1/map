@@ -63,4 +63,9 @@ circle:hover {
 .arc { }
 .flyer { }
 .flyer:hover { }
+.label {
+    font: 16px sans-serif;
+    fill: #fff;
+    text-transform: capitalize;
+}
 
