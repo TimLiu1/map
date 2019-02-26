@@ -24,7 +24,6 @@ var graticule = d3.geoGraticule();
 
 
 
-
         var space = d3.geoAzimuthalEquidistant()
             .translate([width / 2, height / 2])
 
@@ -96,6 +95,22 @@ var swoosh = d3.line()
     .y(function(d) { return d[1] })
     .curve(d3.curveCardinal);
 
+var velocity = .02;
+var timer;
+
+function rotateGlobe() {
+    timer = d3.timer(function(elapsed) {
+        projection.rotate([velocity * elapsed, 0]);
+        reproject()
+    });
+}
+
+rotateGlobe();
+
+function stopGlobe() {
+    timer.stop();
+}
+
 function flying_arc(pts) {
     var source = pts.geometry.coordinates[0],
         target = pts.geometry.coordinates[1];
@@ -148,6 +163,9 @@ function delta(path) {
         }
     }
 }
+
+var timer_ret_val = false;
+
 
 d3.queue()
     .defer(d3.csv, "./new-data/bases.csv")
@@ -218,6 +236,10 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("stroke-width", 30)
         .attr("stroke-opacity",0.01)
         .attr("z-index", 100)
+        .on("click",function () {
+            stopGlobe()
+            // console.log('sphere----')
+        })
 
 
     
@@ -232,6 +254,9 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("fill", "#000")
         .attr("stroke", "#3c3c3c")
         .attr("stroke-width","3px")
+        .on("click",function () {
+            stopGlobe()
+        })
         .append("title")
         .text(function(d) {
             // console.log(d);
@@ -381,12 +406,12 @@ function reproject() {
     })
     // d3.selectAll(".flyer").attr("d", path)
 }
-var velocity = .02;
 
-d3.timer(function(elapsed) {
-    projection.rotate([velocity * elapsed, 0]);
-    reproject()
-});
+// d3.timer(function(elapsed) {
+//     projection.rotate([velocity * elapsed, 0]);
+//     reproject()
+//     // return timer_ret_val;
+// });
 
 
 // d3.timer(function () {
