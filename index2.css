@@ -1,0 +1,66 @@
+/* body { margin:0;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background: #fcfcfa;
+    font-family: "Roboto", sans-serif;
+} */
+body {
+    background-color: #444444;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#000), to(#333));
+    background-image: -webkit-linear-gradient(left top, #000, #333);
+    background-image: -moz-linear-gradient(left top, #000, #333);
+    overflow: hidden;
+}
+
+main {
+    width: 25vw;
+    margin: 0 auto;
+    padding: 5vw;
+    max-width: 50em;
+}
+
+circle:hover {
+    stroke: #002147;
+}
+
+.container {
+    display: flex; /* or inline-flex */
+}
+
+.world {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    stroke-width: 5px;
+}
+
+.arcs {
+    opacity:.1;
+    stroke: gray;
+    stroke-width: 3;
+}
+.flyers {
+    stroke: #1dcbca;
+    stroke-width: 2px;
+    stroke-linejoin: round;
+    fill:none;
+}
+.star {
+    fill: #fff;
+    stroke: rgba(255, 255, 255, .5);
+    stroke-width: .25px;
+}
+
+
+.arc, .flyer {
+    stroke-linejoin: round;
+    fill:none;
+}
+.arc { }
+.flyer { }
+.flyer:hover { }
+
