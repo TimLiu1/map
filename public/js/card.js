@@ -32,7 +32,7 @@ function change() {
 }
 
 function getNumber(num) {
-    if (num / (1000 * 1000) > 0) {
+    if (num / (1000 * 1000) > 1) {
         return (num / (1000 * 1000)).toFixed(1) + 'm/s';
     } else {
         return parseInt(num / 1000) + 'kb/s'
