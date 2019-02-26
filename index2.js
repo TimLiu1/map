@@ -214,8 +214,9 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("class", "world")
         .attr("id", "sphere")
         .attr("fill", "url(#gradBlue)")
-        .attr("stroke", "#ccc")
-        .attr("stroke-width", 1)
+        .attr("stroke", "green")
+        .attr("stroke-width", 30)
+        .attr("stroke-opacity",0.01)
         .attr("z-index", 100)
 
 
@@ -389,6 +390,12 @@ function reproject() {
     })
     // d3.selectAll(".flyer").attr("d", path)
 }
+var velocity = .02;
+
+d3.timer(function(elapsed) {
+    projection.rotate([velocity * elapsed, 0]);
+    reproject()
+});
 
 
 // d3.timer(function () {
