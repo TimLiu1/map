@@ -253,10 +253,21 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .selectAll("path").data(linksData)
         .enter().append("path")
         .attr("class","flyer")
-        // .attr("d", path)
         .attr("d", function(d) {return swoosh(flying_arc(d))})
+        .attr("id", function (d) {
+            console.log(22)
+            return d.id
+        })
         .call(linetransition)
-
+        svg.selectAll("path").on('mouseover',(e) =>{
+            var id = e.id
+            console.log('id',id)
+            cities.forEach((city)=>{
+                if(id == city.id){
+                    renderCard(city)
+                }
+            })
+        })
     // function flying_arc(pts) {
     //
     //     var source = pts.geometry.coordinates[0],
@@ -287,17 +298,11 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .data(citiesData)
         .enter().append("circle")
         .attr("fill", "red")
-        .attr("r", 2.5)
-        .append("title")
-        .on('click', function () {//选择所有的点添加点击事件
-            console.log(12)
-            var id = $(this).attr('id');
-            cities.forEach((city)=>{
-                if(id == city.id){
-                    renderCardLocation(city)
-                }
-            })
+        .attr("r", 8)
+        .attr("id", function (d) {
+            return d.id
         })
+        .append("title")
         .text(function(d) { return "US Funded: " + d.name });
 
     // svg.selectAll(".base")
@@ -313,13 +318,19 @@ function load(error, bases, lilypads, usfunded, world, request) {
     //     .attr("stroke", "#000")
     //     .attr("stroke-width", 2);
 
-    // svg.selectAll("circle")
-    //     .on("click", function(d) {
-    //         title.html(d.name + ", " + d.country);
-    //         notes.html("Notes");
-    //         notesP.html(d.notes);
-    //
-    //     })
+    svg.selectAll("circle")
+        .on("click", function(d) {
+            console.log(2323)
+            var id = $(this).attr('id');
+            console.log('id',id);
+            cities.forEach((city)=>{
+                if(id == city.id){
+                    console.log(21323)
+                    renderCardLocation(city)
+                }
+            })
+    
+        })
 
     reproject();
 
@@ -392,10 +403,10 @@ function reproject() {
 }
 var velocity = .02;
 
-d3.timer(function(elapsed) {
-    projection.rotate([velocity * elapsed, 0]);
-    reproject()
-});
+// d3.timer(function(elapsed) {
+//     projection.rotate([velocity * elapsed, 0]);
+//     reproject()
+// });
 
 
 // d3.timer(function () {
