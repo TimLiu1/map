@@ -33,18 +33,18 @@ var graticule = d3.geoGraticule();
             .projection(space)
             .pointRadius(1);
 
-        var starList = createStars(2000);
+        // var starList = createStars(2000);
 
-        var stars = svg.append("g")
-            .selectAll("g")
-            .data(starList)
-            .enter()
-            .append("path")
-            .attr("class", "star")
-            .attr("d", function (d) {
-                spacePath.pointRadius(d.properties.radius);
-                return spacePath(d);
-            });
+        // var stars = svg.append("g")
+        //     .selectAll("g")
+        //     .data(starList)
+        //     .enter()
+        //     .append("path")
+        //     .attr("class", "star")
+        //     .attr("d", function (d) {
+        //         spacePath.pointRadius(d.properties.radius);
+        //         return spacePath(d);
+        //     });
 
 
         function createStars(number) {

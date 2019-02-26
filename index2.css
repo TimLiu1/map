@@ -26,7 +26,7 @@ circle:hover {
     stroke: #002147;
 }
 
-.container {
+.containerMap {
     display: flex; /* or inline-flex */
 }
 
