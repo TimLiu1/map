@@ -12,23 +12,31 @@ function renderCardLocation(city) {
 }
 
 function renderCard(city) {
-    if (city.outBandwithRate == 'null') city.outBandwithRate = 0
-    if (city.inBandwithRate == 'null') city.inBandwithRate = 0
+    if (city.outBandwithRate == 'null' && city.outBandwithRate === null) city.outBandwithRate = 0
+    if (city.inBandwithRate == 'null' || city.inBandwithRate === null) city.inBandwithRate = 0
     console.log('city', city);
     $('#bandwith').text('Bandwith: ' + Math.ceil(city.bandwith / 1024 / 1024 / 1024) + 'Gbps')
-    $('#outBandwithRate').text('' + city.outBandwithRate + 'b/s')
-    $('#inBandwithRate').text('' + city.inBandwithRate + 'b/s')
+    $('#outBandwithRate').text(getNumber(city.inBandwithRate))
+    $('#inBandwithRate').text(getNumber(city.outBandwithRate))
     $('#rate-title').text(city.city)
     $('#rate-title').text(city.mainCity)
     $('#rate-title-final').text(city.city)
     // rate-title-final
-    $('#utilization').text('Utilization: ' + (city.outBandwithRate / city.bandwith) * 100 + '%')
+    $('#utilization').text('Utilization: ' +getUtilization(city.outBandwith,city.inBandwith,city.bandwith)+ '%')
 
 }
-function change() {
-    console.log(23)
-    $('#city-title').text('123')
 
+function getUtilization(outBandwithRate, inBandwithRate, bandwith) {
+    let bandwithRate = outBandwithRate > inBandwithRate ? outBandwithRate : inBandwithRate
+    return ((bandwithRate/bandwith)*100).toFixed(2)
+}
+
+function getNumber(num) {
+    if (num / (1000 * 1000) > 1) {
+        return (num / (1000 * 1000)).toFixed(1) + 'm/s';
+    } else {
+        return parseInt(num / 1000) + 'kb/s'
+    }
 }
 setTimeout(() => {
     var initdata = {
