@@ -288,6 +288,15 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("fill", "red")
         .attr("r", 2.5)
         .append("title")
+        .on('click', function () {//选择所有的点添加点击事件
+            console.log(12)
+            var id = $(this).attr('id');
+            cities.forEach((city)=>{
+                if(id == city.id){
+                    renderCardLocation(city)
+                }
+            })
+        })
         .text(function(d) { return "US Funded: " + d.name });
 
     // svg.selectAll(".base")
