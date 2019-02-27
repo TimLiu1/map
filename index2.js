@@ -6,8 +6,12 @@ let  timers  = 1
 $("*").on("click", function(){
     timers  = 1
 }) ;
+$("*").on("mouseover", function(){
+    timers  = 1
+}) ;
 setInterval(() => {
-    timers ++ 
+    timers ++
+    console.log('timers',timers) 
     if(timers === 10){
         rotateGlobe();
     }
