@@ -123,45 +123,45 @@ function stopGlobe() {
 var links = svg.append("g");
 var circle = d3.geoCircle()
 
-function flying_arc(pts) {
-
-    var source = pts.geometry.coordinates[0],
-        target = pts.geometry.coordinates[1];
-
-    var mid = location_along_arc(source, target, .5);
-    var result = [ projection(source),
-        curvePro(mid),
-        projection(target) ]
-    return result;
-}
-
-function location_along_arc(start, end, loc) {
-    var interpolator = d3.geoInterpolate(start,end);
-    return interpolator(loc)
-}
-
 // function flying_arc(pts) {
+//
 //     var source = pts.geometry.coordinates[0],
 //         target = pts.geometry.coordinates[1];
 //
-//     var mid = projection(location_along_arc(source, target, .5));
-//     var ctr = projection.translate();
-//
-//     // max length of a great circle arc is π,
-//     // so 0.3 means longest path "flies" 20% of radius above the globe
-//     var scale = 1 + 0.3 * d3.geoDistance(source, target) / Math.PI;
-//
-//     mid[0] = ctr[0] + (mid[0] - ctr[0]) * scale;
-//     mid[1] = ctr[1] + (mid[1] - ctr[1]) * scale;
-//
-//     var result = [projection(source), mid, projection(target)]
+//     var mid = location_along_arc(source, target, .5);
+//     var result = [ projection(source),
+//         curvePro(mid),
+//         projection(target) ]
 //     return result;
 // }
 //
 // function location_along_arc(start, end, loc) {
-//     var interpolator = d3.geoInterpolate(start, end);
+//     var interpolator = d3.geoInterpolate(start,end);
 //     return interpolator(loc)
 // }
+
+function flying_arc(pts) {
+    var source = pts.geometry.coordinates[0],
+        target = pts.geometry.coordinates[1];
+
+    var mid = projection(location_along_arc(source, target, .5));
+    var ctr = projection.translate();
+
+    // max length of a great circle arc is π,
+    // so 0.3 means longest path "flies" 20% of radius above the globe
+    var scale = 1 + 0.3 * d3.geoDistance(source, target) / Math.PI;
+
+    mid[0] = ctr[0] + (mid[0] - ctr[0]) * scale;
+    mid[1] = ctr[1] + (mid[1] - ctr[1]) * scale;
+
+    var result = [projection(source), mid, projection(target)]
+    return result;
+}
+
+function location_along_arc(start, end, loc) {
+    var interpolator = d3.geoInterpolate(start, end);
+    return interpolator(loc)
+}
 
 function linetransition(path) {
     path.transition()
