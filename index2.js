@@ -31,6 +31,7 @@ var spacePath = d3.geoPath()
     .projection(space)
     .pointRadius(1);
 
+var active = d3.select(null);
 // var starList = createStars(2000);
 
 // var stars = svg.append("g")
@@ -255,14 +256,48 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("fill", "#000")
         .attr("stroke", "#3c3c3c")
         .attr("stroke-width", "3px")
-        .on("click", function () {
-            stopGlobe()
-        })
-        .append("title")
-        .text(function (d) {
-            // console.log(d);
-        }); //return countrycodesDict[d.id];
+        .on("click",function (d) {
+            (function transition() {
+                stopGlobe()
+                // if (active.node() === this) return reset();
+                // active.classed("active", false);
+                // active = d3.select(this).classed("active", true);
+                var currentScale = projection.scale();
+                var b = path.bounds(d);
+                var nextScale = currentScale * 1 / Math.max((b[1][0] - b[0][0]) / (width/2), (b[1][1] - b[0][1]) / (height/2));
 
+                d3.transition()
+                    .duration(2500)
+                    .tween("rotate", function() {
+                        // console.log('---daaddada')
+                        var p = d3.geoCentroid(d)
+                        var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+                        var s = d3.interpolate(currentScale, nextScale);
+
+                        return function(t) {
+                            projection.rotate(r(t))
+                                .scale( currentScale > nextScale ? s(Math.pow(t,0.1)) : s(Math.pow(t,2)) );
+                            reproject()
+                        };
+                    })
+            })();
+        })//return countrycodesDict[d.id];
+
+    function reset() {
+        active.classed("active", false);
+        active = d3.select(null);
+        d3.selectAll("path").transition()
+            .attrTween("d", function(d) {
+                var s = d3.interpolate(projection.scale(), 250);
+                return function(t) {
+                    projection
+                        .scale(s(t));
+                    path.projection(projection);
+                    return path(d);
+                }
+            })
+            .duration(1000);
+    }
     // var swoosh = d3.svg.line()
     //     .x(function(d) { return d[0] })
     //     .y(function(d) { return d[1] })
@@ -324,7 +359,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .data(citiesData)
         .enter().append("circle")
         .attr("fill", "red")
-        .attr("r", 8)
+        .attr("r", 4)
         .attr("id", function (d) {
             return d.id
         })
