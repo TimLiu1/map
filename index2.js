@@ -2,6 +2,16 @@ var title = d3.select("h1");
 var notesP = d3.select("#notes");
 var notes = d3.select("h2");
 var loadDevice = [];
+let  timers  = 1
+$("*").on("click", function(){
+    timers  = 1
+}) ;
+setInterval(() => {
+    timers ++ 
+    if(timers === 10){
+        rotateGlobe();
+    }
+}, 1000);
 
 function checkLoadDevice(device) {
     loadDevice.forEach((e) => {
