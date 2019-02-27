@@ -358,7 +358,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
             svg.selectAll(".usfunded")
                 .data(getCityData(data))
                 .enter().append("circle")
-                .attr("fill", "red")
+                .attr("fill", "url(#image)")
                 .attr("r", 8)
                 .attr("id", function (d) {
                     return d.id
