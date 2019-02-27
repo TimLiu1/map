@@ -69,3 +69,7 @@ circle:hover {
     text-transform: capitalize;
 }
 
+
+.cityName{
+    font: 14px sans-serif;
+}

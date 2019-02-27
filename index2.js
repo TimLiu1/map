@@ -1,6 +1,14 @@
 var title = d3.select("h1");
 var notesP = d3.select("#notes");
 var notes = d3.select("h2");
+var loadDevice = [];
+
+function checkLoadDevice(device) {
+    loadDevice.forEach((e) => {
+        if (e === device) return true
+    })
+    return false
+}
 
 var height = window.innerHeight,
     width = window.innerWidth,
@@ -180,37 +188,9 @@ function load(error, bases, lilypads, usfunded, world, request) {
 
     var data = JSON.parse(request.response);
     var cities = data.data;
-    var citiesData = [];
+    var citiesData = getCityData(cities)
     // console.log('===========',cities.data)
-    for (var i = 0; i < cities.length; i++) {
-        // console.log('there------',cities[i])
-        if (cities[i].city != null) {
-            citiesData.push(
-                {
-                    "id": cities[i].id,
-                    "type": "Feature",
-                    "properties": { "name": cities[i].city },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [cities[i].longitude, cities[i].latitude]
-                    }
-                })
-        }
-    }
-
-    var linksData = [];
-    cities.forEach(function (e, i, value) {
-        if (e.city !== null) {
-            linksData.push({
-                "id": e.id,
-                "type": "Feature",
-                "geometry": {
-                    "type": "LineString",
-                    "coordinates": [[e.longitude, e.latitude], [e.MainLongitude, e.MainLatitude]]
-                }
-            })
-        }
-    })
+    var linksData = getLineData(cities)
     var countries = topojson.feature(world, world.objects.countries).features;
     // grid = graticule();
 
@@ -256,7 +236,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("fill", "#000")
         .attr("stroke", "#3c3c3c")
         .attr("stroke-width", "3px")
-        .on("click",function (d) {
+        .on("click", function (d) {
             (function transition() {
                 stopGlobe()
                 // if (active.node() === this) return reset();
@@ -264,19 +244,19 @@ function load(error, bases, lilypads, usfunded, world, request) {
                 // active = d3.select(this).classed("active", true);
                 var currentScale = projection.scale();
                 var b = path.bounds(d);
-                var nextScale = currentScale * 1 / Math.max((b[1][0] - b[0][0]) / (width/2), (b[1][1] - b[0][1]) / (height/2));
+                var nextScale = currentScale * 1 / Math.max((b[1][0] - b[0][0]) / (width / 2), (b[1][1] - b[0][1]) / (height / 2));
 
                 d3.transition()
                     .duration(2500)
-                    .tween("rotate", function() {
+                    .tween("rotate", function () {
                         // console.log('---daaddada')
                         var p = d3.geoCentroid(d)
                         var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
                         var s = d3.interpolate(currentScale, nextScale);
 
-                        return function(t) {
+                        return function (t) {
                             projection.rotate(r(t))
-                                .scale( currentScale > nextScale ? s(Math.pow(t,0.1)) : s(Math.pow(t,2)) );
+                                .scale(currentScale > nextScale ? s(Math.pow(t, 0.1)) : s(Math.pow(t, 2)));
                             reproject()
                         };
                     })
@@ -287,9 +267,9 @@ function load(error, bases, lilypads, usfunded, world, request) {
         active.classed("active", false);
         active = d3.select(null);
         d3.selectAll("path").transition()
-            .attrTween("d", function(d) {
+            .attrTween("d", function (d) {
                 var s = d3.interpolate(projection.scale(), 250);
-                return function(t) {
+                return function (t) {
                     projection
                         .scale(s(t));
                     path.projection(projection);
@@ -322,7 +302,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .call(linetransition)
     svg.selectAll("path").on('mouseover', (e) => {
         var id = e.id
-        console.log('id', id)
         cities.forEach((city) => {
             if (id == city.id) {
                 renderCard(city)
@@ -372,7 +351,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .append("text")
         .attr("class", "label")
         .text(function (d) {
-            console.log('======the-----dddd',d.properties.name)
             return d.properties.name
         })
     labels()
@@ -388,34 +366,23 @@ function load(error, bases, lilypads, usfunded, world, request) {
     // svg.select("#USA")
     //     .attr("stroke", "#000")
     //     .attr("stroke-width", 2);
-
-    svg.selectAll("circle")
-        .on("click", function (d) {
-            console.log(2323)
-            var id = $(this).attr('id');
-            console.log('id', id);
-            let tempCity
-            cities.forEach((city) => {
-                if (id == city.id) {
-                    tempCity = city;
-                    console.log(21323)
-                    renderCardLocation(city)
-                }
-            })
-
-            RequestGet('/network/list?mainDevice='+tempCity.device,(err,result) =>{
-                console.log('result',result)
-                let data = result.data;
-                console.log('///',data)
-
-
-
-
-                var citiess = getCityData(data);
-                console.log("citiess")
-                console.log(citiess)
-                svg.selectAll(".usfunded")
-                .data(citiess)
+    function clickEvent(d) {
+        var id = d.id;
+        console.log('i...d', id)
+        let tempCity
+        cities.forEach((city) => {
+            if (id == city.id) {
+                tempCity = city;
+                renderCardLocation(city)
+            }
+        })
+        if (checkLoadDevice(tempCity.id)) return
+        loadDevice.push(tempCity.id)
+        RequestGet('/network/list?mainDevice=' + tempCity.device, (err, result) => {
+            var data = result.data;
+            cities = cities.concat(data)
+            svg.selectAll(".usfunded")
+                .data(getCityData(data))
                 .enter().append("circle")
                 .attr("fill", "red")
                 .attr("r", 8)
@@ -425,21 +392,24 @@ function load(error, bases, lilypads, usfunded, world, request) {
                 .append("title")
                 .text(function (d) { return "US Funded: " + d.name });
 
+            var routes = getLineData(data);
+            svg.selectAll("circle")
+                .on("click", function (d) {
+                    // console.log('')
+                    clickEvent(d)
+                })
 
+            svg.append("g").selectAll("text")
+                .data(getCityData(data))
+                .enter()
+                .append("text")
+                .attr("class", "label cityName")
+                .text(function (d) {
+                    return d.properties.name
+                })
 
-
-
-
-                var routes = getLineData(data);
-                console.log(routes)
-
-
-
-
-
-
-                // console.log(result)
-                svg.append("g").attr("class", "flyers")
+            // console.log(result)
+            svg.append("g").attr("class", "flyers")
                 .selectAll("path").data(routes)
                 .enter().append("path")
                 .attr("class", "flyer")
@@ -456,17 +426,22 @@ function load(error, bases, lilypads, usfunded, world, request) {
                     })
                 })
                 .call(linetransition)
-            })
-         
-
-            
-
-
-
-
-
-
+            reproject()
         })
+    }
+
+
+
+
+    PointEvent();
+    function PointEvent() {
+        svg.selectAll("circle")
+            .on("click", function (d) {
+                clickEvent(d)
+            })
+    }
+
+
 
     reproject();
 
@@ -513,14 +488,12 @@ function labels() {
             var offset = 5;
             return "translate(" + (x + offset) + "," + (y - 3) + ")"
         })
-    .style("display", function (d) {
-        console.log('----dd--hahahaqha-----',d)
-        var lon = d.geometry.coordinates[0]
-        var lat = d.geometry.coordinates[1]
-        var d = d3.geoDistance([lon,lat], centerPos);
-        console.log('=========',d)
-        return (d > 1.57) ? 'none' : 'inline';
-    });
+        .style("display", function (d) {
+            var lon = d.geometry.coordinates[0]
+            var lat = d.geometry.coordinates[1]
+            var d = d3.geoDistance([lon, lat], centerPos);
+            return (d > 1.57) ? 'none' : 'inline';
+        });
 }
 
 d3.geoInertiaDrag(svg, reproject);
@@ -556,7 +529,7 @@ function reproject() {
             var dist = start_dist < end_dist ? start_dist : end_dist;
 
             return fade(dist)
-    })
+        })
     labels()
     // d3.selectAll(".flyer").attr("d", path)
 }
