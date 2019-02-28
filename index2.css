@@ -46,7 +46,7 @@ circle:hover {
     stroke-width: 3;
 }
 .flyers {
-    stroke: #1dcbca;
+    /*stroke: #1dcbca;*/
     stroke-width: 2px;
     stroke-linejoin: round;
     fill:none;
