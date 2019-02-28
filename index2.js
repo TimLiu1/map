@@ -8,11 +8,12 @@ $("*").on("click", function () {
 });
 
 $("*").on("mouseover", function () {
+    stopGlobe()
     timers = 1
 });
 setInterval(() => {
-    timers ++
-    if(timers === 10){
+    timers++
+    if (timers === 20) {
         rotateGlobe();
     }
 }, 1000);
@@ -292,17 +293,18 @@ function load(error, bases, lilypads, usfunded, world, request) {
         // .call(linetransition)
         .transition()
         .duration(0)
-        .on("start",function repeat() {
+        .on("start", function repeat() {
             d3.active(this)
                 .transition()
-                .duration(2000)
+                .duration(5000)
                 .attrTween("stroke-dasharray", function () {
 
                     // stroke-dasharray
                     // console.log('------dd-node----',this.parentNode.getElementsByTagName("path")[0])
                     var len = this.getTotalLength();
                     return function (t) {
-                        return d3.interpolateString("0," + len, len + "," + len)(t)};
+                        return d3.interpolateString("0," + len, len + "," + len)(t)
+                    };
                     // var path = this.parentNode.getElementsByTagName("path")[0];
                     // var l = path.getTotalLength();
                     // return function(t) {
@@ -356,25 +358,45 @@ function load(error, bases, lilypads, usfunded, world, request) {
     //     .attr("stroke", "#000")
     //     .attr("stroke-width", 2);
 
+    // var scaleChangeTest = 1
+        function zoomClick(){
+            zoom.scaleBy(svg, 1.1); // 执行该方法后 会触发zoom事件
+            let tran = d3.zoomTransform(svg.node());
+            svg.attr("transform", `translate(${tran.x},${tran.y}),scale(${tran.k})`); // 您可以手动地更新
+         
+        }
+
+
 
     $("*").on("dblclick", function () {
-        console.log('1212',zoom)
-              var scaleChange = -0.1
-               scale = scale + scaleChange * originalScale;
-                projection.scale(scale);
-                // previousScaleFactor =  scaleFactor = d3.event.transform.k;
+        zoom.scaleBy(svg, 0.9); // 执行该方法后 会触发zoom事件
+        let tran = d3.zoomTransform(svg.node());
+        svg.attr("transform", `translate(${tran.x},${tran.y}),scale(${tran.k})`); // 您可以手动地更新
+     
+        // console.log('1212', zoom)
+        // if (scale > 600) {
+        //     scaleChangeTest =-1
+        // }
+        // if (scale < -1500) {
+        //     scaleChangeTest =1
+        //      scale = 0;
+        // }
+        // else{
+        //     scale = scale + scaleChangeTest * originalScale;
+        // }
+        // scale = 4000
+        // console.log('scale', scale)
+        // projection.scale(scale);
+        // previousScaleFactor =  scaleFactor = d3.event.transform.k;
         // console.log(323)
-        // zoom.scaleBy(svg, 0.8); // 执行该方法后 会触发zoom事件
-        // let tran = d3.zoomTransform(svg.node());
-        // // svg.attr("transform", `translate(${tran.x},${tran.y}),scale(${tran.k})`); // 您可以手动地更新
-        // console.log(tran);
+         // console.log(tran);
     });
-   
+
 
     function clickEvent(d) {
 
+        zoomClick();
 
-       
         var id = d.id;
         console.log('i...d', id)
         let tempCity
@@ -475,8 +497,8 @@ function load(error, bases, lilypads, usfunded, world, request) {
 
                 scaleFactor = d3.event.transform.k;
                 scaleChange = scaleFactor - previousScaleFactor;
-                console.log('scaleChange',scaleChange)
                 scale = scale + scaleChange * originalScale;
+                console.log('scale', scale)
                 projection.scale(scale);
                 previousScaleFactor = scaleFactor;
 
