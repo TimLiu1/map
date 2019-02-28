@@ -11,12 +11,12 @@ $("*").on("mouseover", function () {
     stopGlobe()
     timers = 1
 });
-setInterval(() => {
-    timers++
-    if (timers === 20) {
-        rotateGlobeStrat();
-    }
-}, 1000);
+// setInterval(() => {
+//     timers++
+//     if (timers === 20) {
+//      rotateGlobeStrat();
+//     }
+// }, 1000);
 
 function checkLoadDevice(device) {
     loadDevice.forEach((e) => {
@@ -118,13 +118,13 @@ var swoosh = d3.line()
 
 var velocity = 0.01;
 var timer;
-function rotateGlobeStrat() {
-    timer.restart(function (elapsed) {
-        projection.rotate([velocity * elapsed, 0]);
-        // curvePro.rotate([velocity * elapsed, 0])
-        reproject()
-    });
-}
+// function rotateGlobeStrat() {
+//     timer.restart(function (elapsed) {
+//         projection.rotate([velocity * elapsed, 0]);
+//         // curvePro.rotate([velocity * elapsed, 0])
+//         reproject()
+//     });
+// }
 
 function rotateGlobe() {
     if (timer) timer = null;
