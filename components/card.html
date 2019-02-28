@@ -1,10 +1,10 @@
 <div>
-    <div class="base-title">
+    <div class="base-title" id="base-title" style="display:none">
         <img style="margin-right: 15px" src="./public/images/icon-location-white.png" height="20px">
         <h4 ><strong><span id="city-title" ></span> </strong></h5>
             <img style="margin-left: 15px" src="./public/images/icon-caretDown.png" width="15px" height="10px">
     </div>
-    <div class="card intro" style="width: 13rem;">
+    <div class="card intro" id="card-intro" style="display:none"  >
             <div style="display:flex">
         <span><strong id="rate-title"></strong></span>  -> 
         <span><strong id="rate-title-final"></strong></span>
@@ -26,7 +26,8 @@
         <span><strong><span id="utilization"></span>
         </strong></span>
     </div>
-    <div class="card card-container" id="card-container" onclick="hiddenCard()" style="width: 17rem">
+    <!-- onclick="hiddenCard()" -->
+    <div id="card-container" class="card card-container" onclick="hiddenCard()"  style="display:none"  style="width: 17rem">
 
         <img src="./public/images/icon-close.png" class="delete" onclick="hiddenCard()" />
         <img alt="Card image cap" class="card-img-top" src="./public/images/index.png">

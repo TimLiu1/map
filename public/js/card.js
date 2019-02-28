@@ -3,9 +3,20 @@ function closeCard() {
 }
 function hiddenCard() {
     $("#card-container").hide()
+    $("#card-container").hide()
+    
 }
 function renderCardLocation(city) {
-    $("#location-title").attr("style","display:block;");
+    console.log('2323...')
+    // $("#location-title").attr("style","display:block;");
+    // if($("#location-title").css("display")=="none"){
+        $("#card-container").show();
+        $("#base-title").show();
+        
+        // .css("display")=="none")
+    // }else{
+        // $("#exPara").hide();
+    // }
     console.log('2323')
     $('#location-title').text(city.city)
     $('#city-title').text(city.city)
@@ -14,6 +25,8 @@ function renderCardLocation(city) {
 }
 
 function renderCard(city) {
+     $("#card-intro").show()
+
     if (city.outBandwithRate == 'null' && city.outBandwithRate === null) city.outBandwithRate = 0
     if (city.inBandwithRate == 'null' || city.inBandwithRate === null) city.inBandwithRate = 0
     console.log('city', city);
@@ -49,7 +62,7 @@ setTimeout(() => {
         MainLatitude: 1.352083,
         MainLongitude: 103.819836,
         bandwith: 1000000000,
-        city: "Shanghai, PRC",
+        city: "Shanghai",
         createdAt: "2019-02-22T08:49:18.000Z",
         device: "pvg0-wr04",
         id: 683246,
@@ -64,7 +77,7 @@ setTimeout(() => {
         outBandwithRate: 2656,
         updatedAt: "2019-02-22T08:49:18.000Z"
     }
-    renderCard(initdata);
-    renderCardLocation(initdata)
+    // renderCard(initdata);
+    // renderCardLocation(initdata)
 
 }, 1000)
