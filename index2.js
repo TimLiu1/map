@@ -302,16 +302,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("dur","0.5s")
         .attr("repeatCount","indefinite");
 
-    svg.append("g").attr("class", "flyers")
-        .selectAll("path").data(linksData)
-        .enter().append("path")
-        .attr("class", "flyer")
-        .attr("stroke", "url(#animate-gradient)")
-        .attr("d", function (d) { return swoosh(flying_arc(d)) })
-        .attr("id", function (d) {
-            // console.log(22)
-            return d.id
-        })
+ 
 
     // svg.selectAll("path").on('mouseover', (e) => {
     //     // LineShow([e])
@@ -458,22 +449,21 @@ function load(error, bases, lilypads, usfunded, world, request) {
                 })
 
             // console.log(result)
-            svg.append("g").attr("class", "flyers")
             var routes = getLineData(data);
             // console.log(routes)
 
-            LineRender(routes)
+            LineShow(routes)
             reproject()
         })
     }
-
+    LineShow(linksData)
     function LineShow(routes) {
         console.log(123456789, routes)
         svg.append("g").attr("class", "flyers")
             .selectAll("path").data(routes)
             .enter().append("path")
             .attr("class", "flyer")
-            .attr("stroke","#1dcbca")
+            .attr("stroke", "url(#animate-gradient)")
             .attr("d", function (d) { return swoosh(flying_arc(d)) })
             .attr("id", function (d) {
                 return d.id
@@ -489,7 +479,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
                     }
                 })
             })
-            .call(linetransition)
     }
 
 
@@ -535,58 +524,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
 
     }
 
-    function LineRender(linksData) {
-        console.log('haha')
-        svg.append("g").attr("class", "flyers")
-            .selectAll("path").data(linksData)
-            .enter().append("path")
-            .attr("class", "flyer")
-            .attr("d", function (d) { return swoosh(flying_arc(d)) })
-            .attr("id", function (d) {
-                // console.log(22)
-                return d.id
-            }).on('mouseout', (e) => {
-                console.log('3..', e)
-                LineRender([e])
-            })
-            .on('mouseover', (e) => {
-                var id = e.id
-                LineShow([e])
-                console.log('e..', e)
-                cities.forEach((city) => {
-                    if (id == city.id) {
-                        renderCard(city)
-                    }
-                })
-            })
-            // .call(linetransition)
-            .transition()
-            .duration(0)
-            .on("start", function repeat() {
-                d3.active(this)
-                    .transition()
-                    .duration(5000)
-                    .attrTween("stroke-dasharray", function () {
-
-                        // stroke-dasharray
-                        // console.log('------dd-node----',this.parentNode.getElementsByTagName("path")[0])
-                        var len = this.getTotalLength();
-                        return function (t) {
-                            return d3.interpolateString("0," + len, len + "," + len)(t)
-                        };
-                        // var path = this.parentNode.getElementsByTagName("path")[0];
-                        // var l = path.getTotalLength();
-                        // return function(t) {
-                        //     var p = path.getPointAtLength(t * l);
-                        //     return "translate(" + p.x + "," + p.y + ")";
-                        // };
-
-                    })
-                    .on("start", repeat)
-            })
-    }
-
-    LineRender(linksData);
 
 }
 
