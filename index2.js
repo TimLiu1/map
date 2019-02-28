@@ -198,22 +198,6 @@ function linetransition(path) {
         })
 }
 
-function transition(plane, route) {
-    var l = route.node().getTotalLength();
-    plane.transition()
-        .duration(5000)
-        .attrTween("transform", delta(route.node()));
-}
-
-function delta(path) {
-    var l = path.getTotalLength();
-    return function (i) {
-        return function (t) {
-            var p = path.getPointAtLength(t * l);
-            return "translate(" + p.x + "," + p.y + ")";
-        }
-    }
-}
 
 d3.queue()
     .defer(d3.csv, "./new-data/bases.csv")
@@ -419,11 +403,11 @@ function load(error, bases, lilypads, usfunded, world, request) {
                             delete e.city
                         }
                     }
-                   
+
                 })
             })
         }
-      
+
     }
 
 
@@ -489,6 +473,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
             .selectAll("path").data(routes)
             .enter().append("path")
             .attr("class", "flyer")
+            .attr("stroke","#1dcbca")
             .attr("d", function (d) { return swoosh(flying_arc(d)) })
             .attr("id", function (d) {
                 return d.id
