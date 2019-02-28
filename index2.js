@@ -29,8 +29,6 @@ var sphere = { type: "Sphere" };
 var graticule = d3.geoGraticule();
 
 
-
-
 var space = d3.geoAzimuthalEquidistant()
     .translate([width / 2, height / 2])
 
@@ -89,18 +87,19 @@ var projection = d3.geoOrthographic()
     .clipAngle(90)
     .rotate([-80, -35]);
 
-var curvePro = d3.geoOrthographic()
-    .translate(translation)
-    .clipAngle(90)
-    .scale(290)
-    .rotate([-80, -35]);
+// var curvePro = d3.geoOrthographic()
+//     .translate(translation)
+//     .clipAngle(90)
+//     .scale(290)
+//     .rotate([-80, -35]);
 
-var path = d3.geoPath().projection(projection).pointRadius(2);
+var path = d3.geoPath().projection(projection);
 
 var swoosh = d3.line()
     .x(function (d) { return d[0] })
     .y(function (d) { return d[1] })
-    .curve(d3.curveCardinal);
+    .curve(d3.curveCardinal.tension(-1));
+
 
 var velocity = .02;
 var timer;
@@ -108,7 +107,7 @@ var timer;
 function rotateGlobe() {
     timer = d3.timer(function (elapsed) {
         projection.rotate([velocity * elapsed, 0]);
-        curvePro.rotate([velocity * elapsed, 0])
+        // curvePro.rotate([velocity * elapsed, 0])
         reproject()
     });
 }
@@ -149,7 +148,7 @@ function flying_arc(pts) {
 
     // max length of a great circle arc is π,
     // so 0.3 means longest path "flies" 20% of radius above the globe
-    var scale = 1 + 0.3 * d3.geoDistance(source, target) / Math.PI;
+    var scale = 1 + 0.6 * d3.geoDistance(source, target) / Math.PI;
 
     mid[0] = ctr[0] + (mid[0] - ctr[0]) * scale;
     mid[1] = ctr[1] + (mid[1] - ctr[1]) * scale;
@@ -220,8 +219,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("class", "world")
         .attr("id", "sphere")
         .attr("fill", "url(#gradient)")
-        // .attr("stroke", "green")
-        // .attr("stroke-width", 30)
         .attr("stroke-opacity", 0.01)
         .attr("z-index", 100)
         .on("click", function () {
@@ -236,6 +233,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
         .attr("class", "world")
         .attr("id", function (d) { return d.id; })
         .attr("fill", "#000")
+        .attr("filter", "url(#sofGlow)")
         .attr("stroke", "#3c3c3c")
         .attr("stroke-width", "3px")
         .on("click", function (d) {
@@ -266,23 +264,23 @@ function load(error, bases, lilypads, usfunded, world, request) {
         })
     //return countrycodesDict[d.id];
 
-    function reset() {
-        active.classed("active", false);
-        active = d3.select(null);
-        d3.selectAll("path").transition()
-            .attrTween("d", function (d) {
-                var s = d3.interpolate(projection.scale(), 250);
-                return function (t) {
-                    projection
-                        .scale(s(t));
-                    path.projection(projection);
-                    return path(d);
-                }
-            })
-            .duration(1000);
-    }
+    // function reset() {
+    //     active.classed("active", false);
+    //     active = d3.select(null);
+    //     d3.selectAll("path").transition()
+    //         .attrTween("d", function (d) {
+    //             var s = d3.interpolate(projection.scale(), 250);
+    //             return function (t) {
+    //                 projection
+    //                     .scale(s(t));
+    //                 path.projection(projection);
+    //                 return path(d);
+    //             }
+    //         })
+    //         .duration(1000);
+    // }
 
-    //city connection
+    // city connection
     svg.append("g").attr("class", "flyers")
         .selectAll("path").data(linksData)
         .enter().append("path")
@@ -293,6 +291,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
             return d.id
         })
         .call(linetransition)
+
     svg.selectAll("path").on('mouseover', (e) => {
         var id = e.id
         cities.forEach((city) => {
@@ -499,6 +498,7 @@ function reproject() {
 
             return fade(dist)
         })
+        // .call(linetransition)
     labels()
     // d3.selectAll(".flyer").attr("d", path)
 }

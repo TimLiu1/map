@@ -35,8 +35,9 @@ circle:hover {
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
-    stroke-width: 3px;
+    stroke-width: 1px;
     /*fill: url(#gradient);*/
+    /*filter:url(#dropShadow);*/
 }
 
 .arcs {
