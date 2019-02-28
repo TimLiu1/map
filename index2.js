@@ -188,22 +188,6 @@ function linetransition(path) {
         })
 }
 
-function transition(plane, route) {
-    var l = route.node().getTotalLength();
-    plane.transition()
-        .duration(5000)
-        .attrTween("transform", delta(route.node()));
-}
-
-function delta(path) {
-    var l = path.getTotalLength();
-    return function (i) {
-        return function (t) {
-            var p = path.getPointAtLength(t * l);
-            return "translate(" + p.x + "," + p.y + ")";
-        }
-    }
-}
 
 d3.queue()
     .defer(d3.csv, "./new-data/bases.csv")
@@ -348,20 +332,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
             return d.properties.name
         })
     labels()
-    // svg.selectAll(".base")
-    //     .data(bases)
-    //     .enter().append("circle")
-    //     .attr("stroke", "red")
-    //     .attr("fill", "#fff")
-    //     .attr("r", 5.5)
-    //     .append("title")
-    //     .text(function(d) { return "Base: " + d.name });
-
-    // svg.select("#USA")
-    //     .attr("stroke", "#000")
-    //     .attr("stroke-width", 2);
-
-    // var scaleChangeTest = 1
         function zoomClick(){
             zoom.scaleBy(svg, 1.1); // 执行该方法后 会触发zoom事件
             let tran = d3.zoomTransform(svg.node());
@@ -375,24 +345,6 @@ function load(error, bases, lilypads, usfunded, world, request) {
         zoom.scaleBy(svg, 0.9); // 执行该方法后 会触发zoom事件
         let tran = d3.zoomTransform(svg.node());
         svg.attr("transform", `translate(${tran.x},${tran.y}),scale(${tran.k})`); // 您可以手动地更新
-     
-        // console.log('1212', zoom)
-        // if (scale > 600) {
-        //     scaleChangeTest =-1
-        // }
-        // if (scale < -1500) {
-        //     scaleChangeTest =1
-        //      scale = 0;
-        // }
-        // else{
-        //     scale = scale + scaleChangeTest * originalScale;
-        // }
-        // scale = 4000
-        // console.log('scale', scale)
-        // projection.scale(scale);
-        // previousScaleFactor =  scaleFactor = d3.event.transform.k;
-        // console.log(323)
-         // console.log(tran);
     });
 
 
@@ -451,6 +403,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
                 .selectAll("path").data(routes)
                 .enter().append("path")
                 .attr("class", "flyer")
+                .attr("stroke","#1dcbca")
                 .attr("d", function (d) { return swoosh(flying_arc(d)) })
                 .attr("id", function (d) {
                     return d.id
