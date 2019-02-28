@@ -350,6 +350,13 @@ function load(error, bases, lilypads, usfunded, world, request) {
     //     .attr("stroke", "#000")
     //     .attr("stroke-width", 2);
     function clickEvent(d) {
+
+
+        zoom.scaleBy(svg, 1.1); // 执行该方法后 会触发zoom事件
+        let tran = d3.zoomTransform(svg.node());
+        svg.attr("transform", `translate(${tran.x},${tran.y}),scale(${tran.k})`); // 您可以手动地更新
+        console.log(tran);
+        return 
         var id = d.id;
         console.log('i...d', id)
         let tempCity

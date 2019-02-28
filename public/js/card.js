@@ -5,6 +5,8 @@ function hiddenCard() {
     $("#card-container").hide()
 }
 function renderCardLocation(city) {
+    $("#location-title").attr("style","display:block;");
+    console.log('2323')
     $('#location-title').text(city.city)
     $('#city-title').text(city.city)
 
