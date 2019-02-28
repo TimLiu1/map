@@ -46,7 +46,7 @@ circle:hover {
     stroke-width: 3;
 }
 .flyers {
-    stroke: #1dcbca;
+    /*stroke: #1dcbca;*/
     stroke-width: 2px;
     stroke-linejoin: round;
     fill:none;
@@ -66,12 +66,12 @@ circle:hover {
 .flyer { }
 .flyer:hover { }
 .label {
-    font: 11px sans-serif;
+    font: 13px sans-serif;
     fill: #fff;
     text-transform: capitalize;
 }
 
 
 .cityName{
-    font: 11px sans-serif;
+    font: 13px sans-serif;
 }

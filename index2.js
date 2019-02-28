@@ -197,8 +197,6 @@ function linetransition(path) {
         })
 }
 
-
-
 function transition(plane, route) {
     var l = route.node().getTotalLength();
     plane.transition()
@@ -289,8 +287,46 @@ function load(error, bases, lilypads, usfunded, world, request) {
         })
     //return countrycodesDict[d.id];
 
+    //Container for the gradient
+    var defs = svg.append("defs");
+    var linearGradient = defs.append("linearGradient")
+        .attr("id","animate-gradient") //unique id for reference
+        .attr("x1","0%")
+        .attr("y1","0%")
+        .attr("x2","100%")
+        .attr("y2","0")
+        //Make sure the areas before 0% and after 100% (along the x)
+        //are a mirror image of the gradient and not filled with the
+        //color at 0% and 100%
+        .attr("spreadMethod", "reflect");
+
+    var opac = ["0","0.5","1","0.5"]
 
 
+    linearGradient.selectAll(".stop")
+        .data(opac)
+        .enter().append("stop")
+        .attr("offset", function(d,i) { return i/(opac.length-1); })
+        .attr("stop-color", "#1dcbca")
+        .attr("stop-opacity",function(d) { return d; })
+
+
+    linearGradient.append("animate")
+        .attr("attributeName","x1")
+        .attr("values","0%;100%")
+        .attr("dur","0.5s")
+        .attr("repeatCount","indefinite");
+
+    svg.append("g").attr("class", "flyers")
+        .selectAll("path").data(linksData)
+        .enter().append("path")
+        .attr("class", "flyer")
+        .attr("stroke", "url(#animate-gradient)")
+        .attr("d", function (d) { return swoosh(flying_arc(d)) })
+        .attr("id", function (d) {
+            // console.log(22)
+            return d.id
+        })
 
     // svg.selectAll("path").on('mouseover', (e) => {
     //     // LineShow([e])
@@ -623,9 +659,7 @@ function reproject() {
 
             return fade(dist)
         })
-    // .call(linetransition)
     labels()
-    // d3.selectAll(".flyer").attr("d", path)
 }
 
 
