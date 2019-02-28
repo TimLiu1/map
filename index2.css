@@ -66,12 +66,12 @@ circle:hover {
 .flyer { }
 .flyer:hover { }
 .label {
-    font: 16px sans-serif;
+    font: 11px sans-serif;
     fill: #fff;
     text-transform: capitalize;
 }
 
 
 .cityName{
-    font: 14px sans-serif;
+    font: 11px sans-serif;
 }
