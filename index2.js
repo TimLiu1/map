@@ -116,7 +116,7 @@ var swoosh = d3.line()
     .curve(d3.curveCardinal.tension(-1));
 
 
-var velocity = 0.01;
+var velocity = 0.02;
 var timer;
 // function rotateGlobeStrat() {
 //     timer.restart(function (elapsed) {
@@ -129,6 +129,7 @@ var timer;
 function rotateGlobe() {
     if (timer) timer = null;
     timer = d3.timer(function (elapsed) {
+        console.log('elapsed',elapsed)
         projection.rotate([velocity * elapsed, 0]);
         // curvePro.rotate([velocity * elapsed, 0])
         reproject()
@@ -629,7 +630,7 @@ d3.geoInertiaDrag(svg, reproject);
 
 function reproject() {
     var c = projection.rotate().slice(0, 2).map(d => -d)
-
+    console.log(123)
     d3.selectAll("circle")
         .attr("transform", function (d) {
             var lon = d.geometry.coordinates[0];
