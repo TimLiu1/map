@@ -2,16 +2,16 @@ var title = d3.select("h1");
 var notesP = d3.select("#notes");
 var notes = d3.select("h2");
 var loadDevice = [];
-let  timers  = 1
-$("*").on("click", function(){
-    timers  = 1
-}) ;
-$("*").on("mouseover", function(){
-    timers  = 1
-}) ;
+let timers = 1
+$("*").on("click", function () {
+    timers = 1
+});
+
+$("*").on("mouseover", function () {
+    timers = 1
+});
 setInterval(() => {
     timers ++
-    // console.log('timers',timers)
     if(timers === 10){
         rotateGlobe();
     }
@@ -355,7 +355,26 @@ function load(error, bases, lilypads, usfunded, world, request) {
     // svg.select("#USA")
     //     .attr("stroke", "#000")
     //     .attr("stroke-width", 2);
+
+
+    $("*").on("dblclick", function () {
+        console.log('1212',zoom)
+              var scaleChange = -0.1
+               scale = scale + scaleChange * originalScale;
+                projection.scale(scale);
+                // previousScaleFactor =  scaleFactor = d3.event.transform.k;
+        // console.log(323)
+        // zoom.scaleBy(svg, 0.8); // 执行该方法后 会触发zoom事件
+        // let tran = d3.zoomTransform(svg.node());
+        // // svg.attr("transform", `translate(${tran.x},${tran.y}),scale(${tran.k})`); // 您可以手动地更新
+        // console.log(tran);
+    });
+   
+
     function clickEvent(d) {
+
+
+       
         var id = d.id;
         console.log('i...d', id)
         let tempCity
@@ -399,11 +418,11 @@ function load(error, bases, lilypads, usfunded, world, request) {
 
             // console.log(result)
             svg.append("g").attr("class", "flyers")
-                var routes = getLineData(data);
-                // console.log(routes)
+            var routes = getLineData(data);
+            // console.log(routes)
 
-                // console.log(result)
-                svg.append("g").attr("class", "flyers")
+            // console.log(result)
+            svg.append("g").attr("class", "flyers")
                 .selectAll("path").data(routes)
                 .enter().append("path")
                 .attr("class", "flyer")
@@ -450,19 +469,21 @@ function load(error, bases, lilypads, usfunded, world, request) {
     var previousScaleFactor = 1;
 
     function zoomed() {
+        if (d3.event.sourceEvent) {
+            var event = d3.event.sourceEvent.type;
+            if (event === "wheel") {
 
-        var event = d3.event.sourceEvent.type;
+                scaleFactor = d3.event.transform.k;
+                scaleChange = scaleFactor - previousScaleFactor;
+                console.log('scaleChange',scaleChange)
+                scale = scale + scaleChange * originalScale;
+                projection.scale(scale);
+                previousScaleFactor = scaleFactor;
 
-        if (event === "wheel") {
-
-            scaleFactor = d3.event.transform.k;
-            scaleChange = scaleFactor - previousScaleFactor;
-            scale = scale + scaleChange * originalScale;
-            projection.scale(scale);
-            previousScaleFactor = scaleFactor;
-
+            }
+            reproject();
         }
-        reproject();
+
     }
 
 }
@@ -478,13 +499,14 @@ function labels() {
             var offset = 5;
             return "translate(" + (x + offset) + "," + (y - 3) + ")"
         })
-    .style("display", function (d) {
-        var lon = d.geometry.coordinates[0]
-        var lat = d.geometry.coordinates[1]
-        var d = d3.geoDistance([lon,lat], centerPos);
-        return (d > 1.57) ? 'none' : 'inline';
-    });
+        .style("display", function (d) {
+            var lon = d.geometry.coordinates[0]
+            var lat = d.geometry.coordinates[1]
+            var d = d3.geoDistance([lon, lat], centerPos);
+            return (d > 1.57) ? 'none' : 'inline';
+        });
 }
+
 
 d3.geoInertiaDrag(svg, reproject);
 
@@ -520,7 +542,9 @@ function reproject() {
 
             return fade(dist)
         })
-        // .call(linetransition)
+    // .call(linetransition)
     labels()
     // d3.selectAll(".flyer").attr("d", path)
 }
+
+
