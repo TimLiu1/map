@@ -13,7 +13,7 @@ $("*").on("mouseover", function () {
 setInterval(() => {
     timers++
     if (timers === 10) {
-        // rotateGlobe();
+        rotateGlobe();
     }
 }, 1000);
 
@@ -126,9 +126,9 @@ function rotateGlobe() {
     });
 }
 
-// rotateGlobe();
+rotateGlobe();
 function stopGlobe() {
-    // timer.stop();
+    timer.stop();
 }
 
 // setInterval(rotateGlobe(),60 * 1000)

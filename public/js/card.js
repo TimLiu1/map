@@ -4,20 +4,11 @@ function closeCard() {
 function hiddenCard() {
     $("#card-container").hide()
     $("#card-container").hide()
-    
+
 }
 function renderCardLocation(city) {
-    console.log('2323...')
-    // $("#location-title").attr("style","display:block;");
-    // if($("#location-title").css("display")=="none"){
-        $("#card-container").show();
-        $("#base-title").show();
-        
-        // .css("display")=="none")
-    // }else{
-        // $("#exPara").hide();
-    // }
-    console.log('2323')
+    $("#card-container").show();
+    $("#base-title").show();
     $('#location-title').text(city.city)
     $('#city-title').text(city.city)
 
@@ -25,7 +16,7 @@ function renderCardLocation(city) {
 }
 
 function renderCard(city) {
-     $("#card-intro").show()
+    $("#card-intro").show()
 
     if (city.outBandwithRate == 'null' && city.outBandwithRate === null) city.outBandwithRate = 0
     if (city.inBandwithRate == 'null' || city.inBandwithRate === null) city.inBandwithRate = 0
@@ -37,17 +28,17 @@ function renderCard(city) {
     $('#rate-title').text(city.mainCity)
     $('#rate-title-final').text(city.city)
     // rate-title-final
-    $('#utilization').text('Utilization: ' +getUtilization(city.outBandwithRate,city.inBandwithRate,city.bandwith)+ '%')
+    $('#utilization').text('Utilization: ' + getUtilization(city.outBandwithRate, city.inBandwithRate, city.bandwith) + '%')
 
 }
 
 function getUtilization(outBandwithRate, inBandwithRate, bandwith) {
     let bandwithRate = outBandwithRate > inBandwithRate ? outBandwithRate : inBandwithRate
-    console.log('bandwithRate',bandwithRate);
-    console.log('outBandwithRate',outBandwithRate);
-    console.log('bandwith',bandwith);
-    console.log('inBandwithRate',inBandwithRate);
-    return ((bandwithRate/bandwith)*100).toFixed(2)
+    console.log('bandwithRate', bandwithRate);
+    console.log('outBandwithRate', outBandwithRate);
+    console.log('bandwith', bandwith);
+    console.log('inBandwithRate', inBandwithRate);
+    return ((bandwithRate / bandwith) * 100).toFixed(2)
 }
 
 function getNumber(num) {
