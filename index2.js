@@ -2,6 +2,20 @@ var title = d3.select("h1");
 var notesP = d3.select("#notes");
 var notes = d3.select("h2");
 var loadDevice = [];
+let  timers  = 1
+$("*").on("click", function(){
+    timers  = 1
+}) ;
+$("*").on("mouseover", function(){
+    timers  = 1
+}) ;
+setInterval(() => {
+    timers ++
+    console.log('timers',timers) 
+    if(timers === 10){
+        rotateGlobe();
+    }
+}, 1000);
 
 function checkLoadDevice(device) {
     loadDevice.forEach((e) => {
@@ -198,6 +212,7 @@ d3.queue()
     .defer(d3.csv, "./new-data/usfunded.csv")
     .defer(d3.json, "https://unpkg.com/world-atlas@1/world/110m.json")
     .defer(d3.request, "http://lvs-hubou-001.corp.ebay.com/api/network/list")
+    // .defer(d3.request, "http://localhost:8008/network/list")
     .await(load);
 
 
