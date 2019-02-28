@@ -11,7 +11,7 @@ $("*").on("mouseover", function(){
 }) ;
 setInterval(() => {
     timers ++
-    console.log('timers',timers) 
+    // console.log('timers',timers)
     if(timers === 10){
         rotateGlobe();
     }
@@ -279,23 +279,7 @@ function load(error, bases, lilypads, usfunded, world, request) {
         })
     //return countrycodesDict[d.id];
 
-    // function reset() {
-    //     active.classed("active", false);
-    //     active = d3.select(null);
-    //     d3.selectAll("path").transition()
-    //         .attrTween("d", function (d) {
-    //             var s = d3.interpolate(projection.scale(), 250);
-    //             return function (t) {
-    //                 projection
-    //                     .scale(s(t));
-    //                 path.projection(projection);
-    //                 return path(d);
-    //             }
-    //         })
-    //         .duration(1000);
-    // }
 
-    // city connection
     svg.append("g").attr("class", "flyers")
         .selectAll("path").data(linksData)
         .enter().append("path")
@@ -305,7 +289,30 @@ function load(error, bases, lilypads, usfunded, world, request) {
             // console.log(22)
             return d.id
         })
-        .call(linetransition)
+        // .call(linetransition)
+        .transition()
+        .duration(0)
+        .on("start",function repeat() {
+            d3.active(this)
+                .transition()
+                .duration(2000)
+                .attrTween("stroke-dasharray", function () {
+
+                    // stroke-dasharray
+                    // console.log('------dd-node----',this.parentNode.getElementsByTagName("path")[0])
+                    var len = this.getTotalLength();
+                    return function (t) {
+                        return d3.interpolateString("0," + len, len + "," + len)(t)};
+                    // var path = this.parentNode.getElementsByTagName("path")[0];
+                    // var l = path.getTotalLength();
+                    // return function(t) {
+                    //     var p = path.getPointAtLength(t * l);
+                    //     return "translate(" + p.x + "," + p.y + ")";
+                    // };
+
+                })
+                .on("start", repeat)
+        })
 
     svg.selectAll("path").on('mouseover', (e) => {
         var id = e.id
